@@ -665,7 +665,6 @@ hej1(){
 
 
   ngOnInit() {
-    this.bajs();
     this.cartDataForm = this.formBuilder.group({
       shipping: [15, Validators.required],
       shippingtax: [1.25, Validators.required],
