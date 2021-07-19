@@ -1,0 +1,18 @@
+{
+    "/api": {
+      "target": "https://api.porterbuddy-test.com/availability",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": ""
+      }
+    },
+    "/order": {
+      "target": "https://api.porterbuddy-test.com/order",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/order": ""
+      }
+    }
+  }

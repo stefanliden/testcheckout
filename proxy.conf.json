@@ -1,0 +1,10 @@
+{
+    "/api": {
+      "target": "https://api.porterbuddy-test.com/",
+      "secure": true,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": ""
+      }
+    }
+  }

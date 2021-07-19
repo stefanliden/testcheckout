@@ -1,0 +1,57 @@
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.card .card-header{
+    padding:15px;
+}
+
+.fa{
+    float: right;
+}
+.bg-primary {
+
+    background:linear-gradient(180deg, #16B3EE 0%, #09A8E5 100% ); 
+    color:white !important
+}
+#porterbuddy-widget{
+  margin-top:5%;
+  width: auto;
+  height: 500px;
+}
+.fa, .far, .fas{
+    color:#661aff;
+}
+.buttons{
+    background:#661aff;
+}
+.button.is-success.is-outlined{
+    border-color: #661aff;
+    color:#661aff;
+}
+.button.is-success.is-outlined:active{
+    background:#661aff;
+    color:white;
+}
+.button.is-success.is-outlined:hover{
+    background:#661aff;
+    color:white;
+}
+
+.fa[_ngcontent-kpf-c247], .far[_ngcontent-kpf-c247], .fas[_ngcontent-kpf-c247] {
+
+   color:white !important;
+}
+.btn-primary    {
+    color:white !important
+}
+
+#removeBtn{
+    margin-top:4%;
+    margin-bottom: 4%;
+}
+

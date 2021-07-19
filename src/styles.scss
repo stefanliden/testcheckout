@@ -1,0 +1,67 @@
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css";
+
+
+.bg-primary {
+
+    background:linear-gradient(180deg, #16B3EE 0%, #09A8E5 100% ); 
+    color:white !important
+}
+
+.btn-primary    {
+    color:white !important
+}
+
+.media:hover{
+    background:#acdaff;
+}
+.card[_ngcontent-cmi-c185] .card-header[_ngcontent-cmi-c185]{
+  background:#eaeaea;
+}
+
+.card-header-icon {
+background:none;
+border:none;
+}
+
+.hero.is-primary{
+background:black;
+}
+.fa[_ngcontent-kpf-c247], .far[_ngcontent-kpf-c247], .fas[_ngcontent-kpf-c247] {
+
+  color:white !important;
+}
+
+
+.input[type=text]:enabled, .input[type=password]:enabled, .input[type=email]:enabled{
+  font-size:0.75rem !important;
+  border-radius:2px !important; 
+}
+.select{
+  font-size:0.75rem !important;
+  border-radius:2px !important; 
+  height: 2.5rem !important;
+}
+.hero .navbar{  background:#661aff;
+  }
+
+.header-image {
+  background-image: url("assets/images/smart.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #8f58ff;
+}
+
+.navbar-item:hover{
+  background:#331a65 !important;
+}
+
+.navbar-item::after{
+  background:red !important;
+}
+.button:focus:not(:active), .button.is-focused:not(:active){
+  box-shadow: none  !important;
+}

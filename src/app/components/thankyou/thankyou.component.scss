@@ -1,0 +1,19 @@
+@media (min-width: 600px) {
+    iframe {
+      width: 600px;
+      height: 900px !important   
+    }
+  }
+  
+  @media (max-width: 450px) {
+  iframe {
+    width: 360px;
+    height: 1100px
+  }
+  }
+  @media (max-width: 400px) {
+  iframe {
+    width: 345px;
+    height: 1100px
+  }
+  }

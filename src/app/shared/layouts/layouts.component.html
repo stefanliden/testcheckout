@@ -1,0 +1,26 @@
+<!-- Add your site or application content here -->
+
+<!--page-wrapper Start-->
+<div class="page-wrapper modern-layout">
+  <!-- header start -->
+  <div class="header">
+  <app-header></app-header>
+  <!--vertical menu start-->
+  <div class="vertical-menu-main">
+      <app-verticalbar ></app-verticalbar>
+  </div>
+  <!--vertical menu ends-->
+</div>
+  <!--Page Body Start-->
+  <div class="page-body-wrapper sidebar-close">
+
+    <div class="page-body">
+      <router-outlet></router-outlet>
+    </div>
+    <!-- footer page -->
+    <app-footer></app-footer>
+  </div>
+  <!--Page Body End-->
+
+</div>
+<!--page-wrapper End-->
