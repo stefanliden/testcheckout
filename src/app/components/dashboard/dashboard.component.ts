@@ -5,7 +5,6 @@ import * as CryptoJS from 'crypto-js';
 import { FormBuilder, FormControl, FormArray, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CheckoutService } from '../../checkout.service';
-import { from, Observable } from 'rxjs';
 
 
 @Component({
@@ -353,7 +352,7 @@ console.log(dataCheckoutToJson1);
  
 
   // use test or production URL depending on environment
-  const response =  fetch('https://api.porterbuddy-test.com/f', {
+  const response =  fetch('https://api.porterbuddy-test.com/availability', {
     method: "POST",
     headers: headers,
     body: dataCheckoutToJson1
@@ -578,93 +577,6 @@ hej1(){
   }
 
 
-
-  
-  getData(): Observable<any> {
-    var data = JSON.stringify({
-      "origin": {
-        "name": "Nils Johansen (Sender)",
-        "address": {
-          "streetName": "Keysers Gate",
-          "streetNumber": "3",
-          "postalCode": "0165",
-          "city": "Oslo",
-          "country": "Norway"
-        },
-        "email": "stefan@porterbuddy.com",
-        "phoneCountryCode": "+47",
-        "phoneNumber": "65127865",
-        "pickupWindows": [
-          {
-            "start": "2021-05-28T17:30:00+02:00",
-            "end": "2021-05-28T19:30:00+02:00"
-          }
-        ]
-      },
-      "destination": {
-        "name": "Mats Olsen (Recipient)",
-        "address": {
-          "streetName": "Høyenhallveien",
-          "streetNumber": "25",
-          "postalCode": "0678",
-          "city": "Oslo",
-          "country": "Norway"
-        },
-        "email": "stefan@porterbuddy.com",
-        "phoneCountryCode": "+47",
-        "phoneNumber": "700911516",
-        "deliveryWindow": {
-          "start": "2021-12-02T19:30:00+01:00",
-          "end": "2021-12-02T21:30:00+01:00",
-          "token": "E0LyQuF/rQSHCuyXIh6mfQ==:eIbBL7D4aIECETdfNQwJ2g==:iEa4BrDuKeoQCnbt4J/gCgyf+NHpl3XAKr2Wyv9/r0c0FUk0veWkp/cjrOwIJg+qquTgA/+2je3qqdzLkeJgGMT1N5rZlxzKsQsq/jMKcZbAU2lmiAFaKa5B8qm21aFFYXgWAymPS60pPAD+Dyg/eg=="
-        },
-        "verifications": {
-          "minimumAgeCheck": 16,
-          "leaveAtDoorstep": false,
-          "idCheck": true,
-          "requireSignature": false,
-          "onlyToRecipient": true
-        }
-      },
-      "parcels": [
-        {
-          "description": "Shoes",
-          "widthCm": 1,
-          "heightCm": 40,
-          "depthCm": 1,
-          "weightGrams": 2000,
-          "parcelShipmentIdentifier": "12345"
-        },
-        {
-          "description": "Shoes",
-          "widthCm": 1,
-          "heightCm": 40,
-          "depthCm": 1,
-          "weightGrams": 2000,
-          "parcelShipmentIdentifier": "12346"
-        }
-      ],
-      "product": "delivery",
-      "courierInstructions": "Test",
-      "shipmentIdentifier": "1192345"
-    });
-
-    return from(
-      fetch(
-        'https://api.porterbuddy-test.com/order', // the url you are trying to access
-        {
-          body:data,
-          headers: {
-            'Content-Type': 'application/json',
-            "x-api-key": "yOxaPhpechYuey1mi16JZNI4p4laved0LKuOw8KS",
-            "Idempotency-Key": "yOxaPhpechYuey1mi16JZNI4p4laved0LKuDAOw8KS"
-          },
-          method: 'POST', // GET, POST, PUT, DELETE
-          mode: 'no-cors' // the most important option
-        }
-      ));
-  }
-
   bajs(){
     var data = JSON.stringify({
       "origin": {
@@ -753,8 +665,7 @@ hej1(){
 
 
   ngOnInit() {
-   // this.bajs();
-    this.getData();
+    this.bajs();
     this.cartDataForm = this.formBuilder.group({
       shipping: [15, Validators.required],
       shippingtax: [1.25, Validators.required],
