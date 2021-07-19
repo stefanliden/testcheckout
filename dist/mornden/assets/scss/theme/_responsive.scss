@@ -1,0 +1,450 @@
+/**=====================
+     63. Responsive CSS Start
+==========================**/
+
+@media screen and (max-width: 1660px){
+  .vertical-menu-main {
+    .mega-menu {
+      width: 1200px !important;
+      max-width: 1200px !important;
+      left: 0 !important;
+    }
+  }
+}
+
+/* ========= min and max scss for 1200 to 1366 screen ========= */
+@media screen and (min-device-width: 1200px) and (max-device-width: 1366px) {
+  .flot-chart-container {
+    height: 282px;
+  }
+  .xl-60{
+    max-width: 60%;
+    flex:0 0 60%;
+  }
+  .xl-50{
+    max-width: 50%;
+    flex:0 0 50%;
+  }
+  .xl-100{
+    max-width: 100%;
+    flex:0 0 100%;
+  }
+  .xl-23{
+    max-width: 23%;
+    flex:0 0 23%;
+  }
+  .xl-25{
+    max-width: 25%;
+    flex:0 0 25%;
+  }
+  .xl-40{
+    max-width: 40%;
+    flex:0 0 40%;
+  }
+  .xl-4{
+    max-width: 33.33%;
+    flex:0 0 33.33%;
+  }
+}
+
+/* ========= responsive scss for 1366 screen ========= */
+@media only screen and (max-width: 1366px) {
+  .testimonial {
+    i{
+      font-size: 46px;
+    }
+    p{
+      margin-top: 20px;
+    }
+  }
+  .widget-joins{
+    .media{
+      padding: 20px;
+      .media-body{
+        h3{
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}
+
+/* ========= responsive scss for 1200 screen ========= */
+@media only screen and (max-width: 1199px) {
+  .flot-chart-container {
+    height: 250px;
+  }
+  .testimonial{
+    p {
+      margin-top: 17px;
+    }
+  }
+}
+
+/* ========= responsive scss for 992 screen ========= */
+@media only screen and (max-width: 991px) {
+  .page-wrapper {
+    .page-main-header {
+      .main-header-right {
+        .nav-right{
+          .notification {
+            top: 10px !important;
+        }
+        }
+      }
+      .main-header-left {
+        .logo-wrapper{
+          img {
+            height: 50px;
+          }
+        }
+      }
+    }
+  }
+  h1{
+    font-size: 34px;
+  }
+  h2{
+    font-size: 28px;
+  }
+  h3{
+    font-size: 26px;
+  }
+  h4{
+    font-size: 22px;
+  }
+  h5{
+    font-size: 18px;
+  }
+  h6{
+    font-size: 15px;
+  }
+
+  .flot-chart-container {
+    height: 300px;
+  }
+  footer {
+    bottom: -20px;
+  }
+  .owl-theme {
+    .owl-nav{
+      &.disabled {
+        &+ .owl-dots {
+          margin-bottom: -10px;
+          margin-top: 15px;
+        }
+      }
+    }
+  }
+  .page-wrapper{
+    .page-main-header{
+      height: 60px;
+      .main-header-left{
+        .logo-wrapper{
+          img{
+            height: 50px;
+          }
+        }
+      }
+      .main-header-right{
+        .nav-right{
+          position: unset;
+          >
+          .mobile-toggle{
+            cursor: pointer;
+            .icon-more{
+              vertical-align: middle;
+            }
+          }
+          > ul{
+            top: 60px;
+            position: absolute;
+            z-index: -1;
+            background-color: $white;
+            transition: all linear 0.3s;
+            box-shadow: 0 2px 2px 2px #efefef;
+            width: 100%;
+            left: 0;
+            padding: 0 40px;
+            transform: translateY(-35px) scaleY(0);
+            opacity: 0;
+            visibility: hidden;
+            &.open{
+              z-index: 1;
+              opacity: 1;
+              transform: translateY(0px) scaleY(1);
+              visibility: visible;
+            }
+            > li{
+              padding: 15px 0 !important;
+              h6{
+                font-size: 0;
+              }
+              .onhover-show-div {
+                top: 64px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .page-body-wrapper {
+      .page-sidebar {
+        top: 60px;
+        height: calc(100vh - 60px);
+        ~ .page-body{
+          margin-left:0px;
+          padding-top: 0 !important;
+        }
+      }
+      .page-sidebar-open{
+        width: 250px;
+      }
+      .page-header{
+        padding-top: 25px;
+        padding-bottom: 25px;
+        .row{
+          h3{
+            font-size: 22px;
+          }
+        }
+        .breadcrumb {
+          float: left;
+          padding-left: 0;
+          margin-top: 7px;
+        }
+      }
+      .page-body{
+        margin-top: 60px;
+        padding: 0 10px;
+      }
+      .card{
+        .card-header,.card-body,.card-footer{
+          padding: 20px;
+        }
+      }
+    }
+  }
+  .widget-joins{
+    .media{
+      .media-body {
+        i {
+          float:none! important;
+        }
+      }
+    }
+  }
+  .m-b-30{
+    margin-bottom: 20px!important;
+  }
+}
+
+/* ========= responsive scss for 768 screen ========= */
+@media only screen and (max-width: 767px) {
+  .text-md-right{
+    text-align: right;
+  }
+  //footer
+  .footer-links{
+    text-align:center;
+  }
+  .footer-copyright{
+    text-align:center;
+  }
+  .sm-left-text{
+    text-align: left!important;
+  }
+}
+/* ========= responsive scss for 575 screen ========= */
+@media only screen and (max-width: 575px) {
+  .widget-joins{
+    &:before{
+      display: none;
+    }
+    .pl-0 {
+      padding-left: 15px !important;
+    }
+    .border-after-xs {
+      &:after {
+        content: "";
+        position: absolute;
+        height: 1px;
+        width: 94%;
+        background-color: $light-semi-gray;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: 0 auto;
+      }
+    }
+  }
+  .nav {
+    display: inherit;
+    text-align: center;
+    border-bottom: none;
+  }
+  .card {
+    .card-header {
+      h5 {
+        font-size: 17px;
+      }
+    }
+  }
+  .page-wrapper {
+    .page-body-wrapper {
+      .card {
+        margin-bottom: 15px;
+        .card-header, .card-body, .card-footer {
+          padding: 15px;
+        }
+      }
+      .page-body {
+        padding: 0 !important;
+      }
+      .page-header {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        .row {
+          h3 {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+    .page-main-header {
+      .nav-right {
+        > ul {
+          .search-form {
+            .mobile-search {
+              background-image: url(/assets/images/dashboard/search.png);
+              height: 15px;
+              width: 15px;
+              display: inline-block;
+              background-size: cover;
+              margin: 5px 0 0;
+            }
+            .form-control-plaintext {
+              top: 60px;
+              position: absolute;
+              transition: all linear 0.3s;
+              left: 0;
+              background-color: $white;
+              transform: translateY(-35px) scaleY(0);
+              opacity: 0;
+              visibility: hidden;
+              width: 180px;
+              &.open {
+                transform: translateY(0px) scaleY(1);
+                opacity: 1;
+                visibility: visible;
+                transition: all linear 0.3s;
+              }
+            }
+            .form-group {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  /* alert responsive css start here */
+  $alert-name: primary,
+  secondary,
+  success,
+  danger,
+  warning,
+  info,
+  light,
+  dark;
+  $alert-color: $primary-color,
+  $secondary-color,
+  $success-color,
+  $danger-color,
+  $warning-color,
+  $info-color,
+  $light-color,
+  $dark-color;
+
+  @each $var in $alert-name {
+    $i: index($alert-name, $var);
+    .alert-#{$var}.inverse {
+      background-color: transparent;
+    }
+  }
+  .alert {
+    .close {
+      height: 100%;
+    }
+  }
+  .flot-chart-container {
+    height: 300px;
+  }
+}
+/* ========= responsive scss for 480 screen ========= */
+@media only screen and (max-width: 480px) {
+  ul {
+    &.notification-dropdown {
+      &.onhover-show-div {
+        width: 260px;
+        right: -80px;
+        &:before, &:after {
+          right: 89px !important;
+        }
+      }
+    }
+  }
+  .card {
+    .card-header {
+      > span {
+        & + span {
+          display: none;
+        }
+      }
+    }
+  }
+  .card {
+    .card-header {
+      .card-header-right {
+        i {
+          margin: 0 3px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  .badge {
+    padding: 0.42em 0.7em;
+  }
+}
+/* ========= responsive scss for 360 screen ========= */
+@media only screen and (max-width: 360px) {
+  .widget-joins{
+    .border-after-xs {
+      &:after {
+        width: 92%;
+      }
+    }
+  }
+  .page-wrapper {
+    .page-main-header {
+      .main-header-left {
+        .logo-wrapper{
+          img {
+            height: 45px;
+            margin-top: 5px;
+          }
+        }
+      }
+    }
+
+  }
+  .flot-chart-container{
+    height: 230px;
+  }
+}
+
+/**=====================
+     63. Responsive CSS Ends
+==========================**/
