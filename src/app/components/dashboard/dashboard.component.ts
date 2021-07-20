@@ -259,7 +259,7 @@ saveData : any;
       
       console.log(orderInfosec);
      
-      this.http.post("https://api.porterbuddy-test.com/orde1r", orderInfosec, { headers: header }
+      this.http.post("https://api.porterbuddy-test.com/order", orderInfosec, { headers: header }
       )
         .subscribe(
           data => {
