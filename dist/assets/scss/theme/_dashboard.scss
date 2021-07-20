@@ -1,0 +1,83 @@
+/**=====================
+    53. Dashboard CSS Start
+==========================**/
+.widget-joins {
+  &:before{
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background-color: $light-semi-gray;
+    left: calc(50% - 1px);
+  }
+  &:after{
+    content: "";
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    background-color: $light-semi-gray;
+    left: 0;
+    top: 50%;
+  }
+  .media{
+    padding: 30px;
+    text-align: center;
+    align-items: center;
+    .details{
+      border-left: 1px solid $light-semi-gray;
+      padding: 1px 0;
+    }
+    .media-body{
+      text-align: left;
+      span{
+        font-family: $font-open-sans;
+      }
+      >span{
+        color: $theme-body-sub-title-color;
+      }
+      i{
+        font-size: 40px;
+      }
+      h6{
+        font-family: $font-open-sans;
+        font-weight: 600;
+         span{
+           color: $black;
+         }
+      }
+    }
+  }
+}
+.testimonial{
+  i{
+    font-size: 60px;
+    color: $light-color;
+  }
+  p{
+    color: $theme-body-sub-title-color;
+    font-style: italic;
+    margin-bottom: 30px;
+    margin-top: 30px;
+  }
+  h5{
+    color:$theme-body-font-color;
+    padding-top: 10px;
+  }
+  span{
+    color: $theme-body-sub-title-color;
+  }
+  img{
+    margin: 0 auto;
+  }
+}
+.flot-chart-container{
+  height:472px;
+}
+/**=====================
+  53. Dashboard CSS Ends
+==========================**/
+
+
+
+
+
