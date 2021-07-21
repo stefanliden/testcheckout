@@ -114,9 +114,9 @@
                                   </div>
                               </div>
                               <div class="form-group row">
-                                  <label class="labelMedium" for="idCred">city</label>
+                                  <label class="labelMedium" for="idCred">city1</label>
                                   <div class="col-md-6">
-                                      <input class="input is-small" id="city" formControlName="city" name="city" type="text" placeholder="" />
+                                      <input class="input is-small" id="cit1y" formControlName="city" name="city" type="text" placeholder="" />
                                   </div>
                               </div>
 
@@ -158,7 +158,7 @@
                               <div class="form-group row">
                                   <label class="labelMedium" for="idCred">streetName</label>
                                   <div class="col-md-6">
-                                      <input class="input is-small" id="streetName" formControlName="streetName" name="streetName" type="text" placeholder="" />
+                                      <input class="input is-small" id="streetNa3me" formControlName="streetName" name="streetName" type="text" placeholder="" />
                                   </div>
                               </div>
                               <div class="form-group row">
@@ -170,7 +170,7 @@
                               <div class="form-group row">
                                   <label class="labelMedium" for="idCred">postalCode</label>
                                   <div class="col-md-6">
-                                      <input class="input is-small" id="postalCode" formControlName="postalCode" name="postalCode" type="text" placeholder="" />
+                                      <input class="input is-small" id="postalCoded" formControlName="postalCode" name="postalCode" type="text" placeholder="" />
                                   </div>
                               </div>
                               <div class="form-group row">
@@ -194,7 +194,7 @@
             <div class="card">
                 <header class="card-header">
                     <p class="card-header-title">
-                        recipient
+                        Recipient
                         <span class="icon">
                             <i class="icofont icofont-credit-card"></i>
                         </span>
@@ -312,6 +312,148 @@
               </div>
 
            
+              <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        Items
+                        <span class="icon">
+                            <i class="icon-shopping-cart"></i>
+                        </span>
+                    </p>
+
+                    <button  class="button is-outlined" (click)="itemsDataShow ($event)"  aria-label="more options">
+                      <span class="icon">
+                          <i class="fas fa-shopping-basket"></i>
+                      </span>
+                  </button>
+
+
+                </header>
+                <div class="card-content" [hidden]="!itemsDataBool">
+                    <div class="content">
+                        <button (click)="addGroupItems()" type="button"class="button is-success button is-small"><span class="icon-plus"></span> Add</button>
+                        <form [formGroup]="itemsForm" class="form-horizontal">
+                            <fieldset>
+                                <div formArrayName="products" *ngFor="let time of itemsForm.controls.products?.value; let i = index; trackBy:trackByFn">
+                                    <div [formGroupName]="i">
+                                 
+
+                                    
+
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="heightCm">name</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="name"  (ngModelChange)="changedExtraHandler($event)" type="text" formControlName="name" class="input is-small" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="sku">sku</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="name" (ngModelChange)="changedExtraHandler($event)" formControlName="sku" type="text" class="input is-small" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="weightGrams">weightGrams</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="weightGrams" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" formControlName="weightGrams" type="text" class="input is-small" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="sku">sku</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="sku" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" formControlName="widthCm" type="text" class="input is-small" />
+                                            </div>
+                                        </div>
+
+                                        
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="heightCm">heightCm</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="heightCm" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" type="text" formControlName="heightCm" class="input is-small" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="widthCm">widthCm</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="widthCm" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" formControlName="widthCm" type="text" class="input is-small" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="depthCm">depthCm</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="depthCm" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" formControlName="depthCm" type="text" class="input is-small" />
+                                            </div>
+                                        </div>
+
+                                        
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="description">description</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="description" (ngModelChange)="changedExtraHandler($event)" formControlName="description" type="text" class="input is-small" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="category">category</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="category" (ngModelChange)="changedExtraHandler($event)" formControlName="category" type="text" class="input is-small" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="brand">brand</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="brand" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" formControlName="imageUrl" type="text" class="input is-small" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="price">price</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="price" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" formControlName="price" type="text" class="input is-small" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="imageUrl">imageUrl</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="imageUrl"  (ngModelChange)="changedExtraHandler($event)" formControlName="imageUrl" type="text" class="input is-small" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="currency">currency</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="name" (ngModelChange)="changedExtraHandler($event)" formControlName="currency" type="text" class="input is-small" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="barCodevalue">barCodevalue</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="barCodevalue"  (ngModelChange)="changedExtraHandler($event)" formControlName="barCodevalue" type="text" class="input is-small" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="labelMedium" for="barCodetype">barCodetype</label>
+                                            <div class="col-md-6">
+                                                <input placeholder="barCodetype"  (ngModelChange)="changedExtraHandler($event)" formControlName="barCodetype" type="text" class="input is-small" />
+                                            </div>
+                                        </div>
+
+
+                                   
+                                    </div>
+                                    <button (click)="removeGroupItems(i)" type="button" id="removeBtn" class="button is-danger  button is-small"><span class="icon-close"></span>Remove</button>
+                                </div>
+
+                                <br />
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
             
 
          

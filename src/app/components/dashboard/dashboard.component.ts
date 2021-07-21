@@ -19,6 +19,8 @@ export class DashboardComponent implements OnInit {
   cartDataBool = false;
   checkoutDataBool = false;
   customerDataBool = false;
+  itemsDataBool = false;
+
   articleDataBool = false;
   credTestDataBool = false;
   credDataBool = false;
@@ -58,6 +60,8 @@ export class DashboardComponent implements OnInit {
   customerFormShipping: FormGroup;
   customerFormAdressNr: FormGroup;
   articleForm: FormGroup;
+  itemsForm: FormGroup;
+
   articleForm1: FormGroup;
   contactForm: FormGroup;
   orderForm: FormGroup;
@@ -95,6 +99,7 @@ export class DashboardComponent implements OnInit {
       this.expandAllBool = true;
       this.cartDataBool = true;
       this.customerDataBool = true;
+      this.itemsDataBool = true;
       this.articleDataBool = true;
       this.credTestDataBool = true;
       this.credDataBool = true;
@@ -107,6 +112,7 @@ export class DashboardComponent implements OnInit {
     else {
       this.expandAllBool = false;
       this.cartDataBool = false;
+      this.customerDataBool = false;
       this.customerDataBool = false;
       this.articleDataBool = false;
       this.credTestDataBool = false;
@@ -128,6 +134,10 @@ export class DashboardComponent implements OnInit {
   public customerDataShow(event) {
     if (this.customerDataBool == false) { this.customerDataBool = true; } else { this.customerDataBool = false; }
   }
+  public itemsDataShow(event) {
+    if (this.itemsDataBool == false) { this.itemsDataBool = true; } else { this.itemsDataBool = false; }
+  }
+
 
   public articleDataShow(event) {
     if (this.articleDataBool == false) { this.articleDataBool = true; } else { this.articleDataBool = false; }
@@ -168,13 +178,31 @@ export class DashboardComponent implements OnInit {
 
 
 
-  createOrder() {
+  createOrder() { 
+    this.showErrorDataBool = false; 
+
     let originAddress = JSON.parse(JSON.stringify(this.originAddress.value));
     let recipientAdress = JSON.parse(JSON.stringify(this.recipient.value));
     let destinationAddress = JSON.parse(JSON.stringify(this.destinationAddress.value));
     let pickupWindows = JSON.parse(JSON.stringify(this.articleForm1.value.products));
     let parcels = JSON.parse(JSON.stringify(this.articleForm.value.products));
     let apiKey = JSON.parse(JSON.stringify(this.apiKeyForm.value.apiKey));
+    let items = JSON.parse(JSON.stringify(this.itemsForm.value.products));
+    items.forEach(element => {
+      element.price = {
+        price: element.price,
+        currency: element.currency
+      }
+
+      element.barCode = {
+        value: element.barCodetype,
+        type: element.barCodevalue
+      }
+      delete element.currency;
+      delete element.barCodevalue;
+      delete element.barCodetype;
+
+    });
 
 
 
@@ -204,6 +232,7 @@ export class DashboardComponent implements OnInit {
         }
       },
       "parcels": parcels,
+      "items": items,
 
       "product": "delivery",
       "courierInstructions": "Test",
@@ -233,6 +262,7 @@ export class DashboardComponent implements OnInit {
         },
         error => {
           this.showIframe1 = false;
+          this.showErrorDataBool = true;
 
           this.myObj = error.error[0];
 
@@ -252,8 +282,29 @@ export class DashboardComponent implements OnInit {
     let pickupWindows = JSON.parse(JSON.stringify(this.articleForm1.value.products));
     let parcels = JSON.parse(JSON.stringify(this.articleForm.value.products));
     let publicToken = JSON.parse(JSON.stringify(this.apiKeyForm.value.publicToken));
+    let items = JSON.parse(JSON.stringify(this.itemsForm.value.products));
+ 
+    
+    var x = [];
 
+    items.forEach(element => {
+    
+      element.price = {
+        price: element.price,
+        currency: element.currency
+      }
 
+      element.barCode = {
+        value: element.barCodetype,
+        type: element.barCodevalue
+      }
+      delete element.currency;
+      delete element.barCodevalue;
+      delete element.barCodetype;
+
+    });
+
+      
     var dataCheckout = {
 
       "pickupWindows": pickupWindows,
@@ -262,6 +313,8 @@ export class DashboardComponent implements OnInit {
       "recipient": recipientAdress,
       "products": ["delivery"],
       "parcels": parcels,
+      "items": items,
+
     }
 
 
@@ -438,6 +491,12 @@ export class DashboardComponent implements OnInit {
       ])
     });
 
+    this.itemsForm = this.formBuilder.group({
+      products: this.formBuilder.array([
+        this.initItems()
+      ])
+    });
+
 
     this.articleForm1 = this.formBuilder.group({
       products: this.formBuilder.array([
@@ -516,6 +575,30 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  
+  initItems() {
+    return this.formBuilder.group({
+      name: this.formBuilder.control('Fancy Sneakers', Validators.required),
+      sku: this.formBuilder.control('FANCYSNEAKER43', Validators.required),
+      weightGrams: this.formBuilder.control('2000', Validators.required),
+
+      widthCm: this.formBuilder.control('20', Validators.required),
+      heightCm: this.formBuilder.control('10', Validators.required),
+      depthCm: this.formBuilder.control('35', Validators.required),
+
+      description: this.formBuilder.control('Fancy sneakers (red/blue) in size 43', Validators.required),
+      category: this.formBuilder.control('45', Validators.required),
+
+      brand: this.formBuilder.control('Shoes', Validators.required),
+      imageUrl: this.formBuilder.control('https://awesomewebshop.com/images/5fd71d6f-b0be-4480-900f-f3d008a0bc62.png', Validators.required),
+      price: this.formBuilder.control('79900', Validators.required),
+      currency: this.formBuilder.control('NOK', Validators.required),
+      barCodevalue: this.formBuilder.control('123-456-789', Validators.required),
+      barCodetype: this.formBuilder.control('CODE128', Validators.required),
+
+    });
+  }
+
   x = 14;
 
   initArticle1() {
@@ -537,6 +620,20 @@ export class DashboardComponent implements OnInit {
   removeGroup(i: number) {
     // remove address from the list
     const control = <FormArray>this.articleForm.controls['products'];
+    control.removeAt(i);
+
+  }
+
+  addGroupItems() {
+    // add address to the list
+    const control = <FormArray>this.itemsForm.controls['products'];
+    control.push(this.initItems());
+
+  }
+
+  removeGroupItems(i: number) {
+    // remove address from the list
+    const control = <FormArray>this.itemsForm.controls['products'];
     control.removeAt(i);
 
   }
