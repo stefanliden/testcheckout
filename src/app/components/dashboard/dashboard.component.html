@@ -29,25 +29,25 @@
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
-                            pickupWindows
+                            PickupWindows
                             <span class="icon">
                                 <i class="icon-shopping-cart"></i>
                             </span>
                         </p>
-                        <button class="button is-outlined" (click)="articleDataShow ($event)" aria-label="more options">
+                        <button class="button is-outlined" (click)="pickupWindowsDataShow ($event)" aria-label="more options">
                             <span class="icon">
                                 <i class="far fa-window-maximize"></i>
                             </span>
                         </button>
                     </header>
-                    <div class="card-content" [hidden]="!articleDataBool">
+                    <div class="card-content" [hidden]="!pickupDataBool">
                         <div class="content">
-                            <button (click)="addGroup1()" type="button" class="button is-success button is-small"><span
+                            <button (click)="addPickupWindows()" type="button" class="button is-success button is-small"><span
                                     class="icon-plus"></span> Add</button>
-                            <form [formGroup]="articleForm1" class="form-horizontal">
+                            <form [formGroup]="pickupWindowsForm" class="form-horizontal">
                                 <fieldset>
                                     <div formArrayName="products"
-                                        *ngFor="let time of articleForm1.controls.products?.value; let i = index; trackBy:trackByFn">
+                                        *ngFor="let time of pickupWindowsForm.controls.products?.value; let i = index; trackBy:trackByFn">
                                         <div [formGroupName]="i">
 
 
@@ -70,7 +70,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button (click)="removeGroup1(i)" type="button" id="removeBtn"
+                                        <button (click)="RemovePickupWindows(i)" type="button" id="removeBtn"
                                             class="button is-danger  button is-small"><span
                                                 class="icon-close"></span>Remove</button>
                                     </div>
@@ -86,12 +86,12 @@
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
-                            originAddress
+                            Origin
                             <span class="icon">
                                 <i class="icofont icofont-credit-card"></i>
                             </span>
                         </p>
-                        <button class="button is-outlined" (click)="credDataShow ($event)" aria-label="more options">
+                        <button class="button is-outlined" (click)="orginDataShow ($event)" aria-label="more options">
                             <span class="icon">
                                 <i class="far fa-building"></i>
                             </span>
@@ -127,7 +127,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">city1</label>
+                                        <label class="labelMedium" for="idCred">city</label>
                                         <div class="col-md-6">
                                             <input class="input is-small" id="cit1y" formControlName="city" name="city"
                                                 type="text" placeholder="" />
@@ -137,6 +137,43 @@
                                     <!-- Form Name -->
                                 </fieldset>
                             </form>
+
+                            <form [formGroup]="originInfoForm" class="form-horizontal">
+                                <fieldset>
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="idCred">name</label>
+                                        <div class="col-md-6">
+                                            <input class="input is-small" id="name" formControlName="name"
+                                                name="name" type="text" placeholder="" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="email">email</label>
+                                        <div class="col-md-6">
+                                            <input class="input is-small" id="email"
+                                                formControlName="email" name="email" type="text"
+                                                placeholder="" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="phoneCountryCode">phoneCountryCode</label>
+                                        <div class="col-md-6">
+                                            <input class="input is-small" id="phoneCountryCode" formControlName="phoneCountryCode"
+                                                name="phoneCountryCode" type="text" placeholder="" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="phoneNumber">phoneNumber</label>
+                                        <div class="col-md-6">
+                                            <input class="input is-small" id="phoneNumber" formControlName="phoneNumber" name="phoneNumber"
+                                                type="text" placeholder="" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Form Name -->
+                                </fieldset>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -144,19 +181,90 @@
 
 
 
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            Verification
+                            <span class="icon">
+                                <i class="icofont icofont-credit-card"></i>
+                            </span>
+                        </p>
+                        <button class="button is-outlined" (click)="verificationDataShow ($event)" aria-label="more options">
+                            <span class="icon">
+                                <i class="fas fa-dolly"></i>
+                            </span>
+                        </button>
+                    </header>
+
+
+
+                    <div class="card-content" [hidden]="!verDataBool">
+                        <div class="content">
+                      
+                            <form [formGroup]="verificationsForm" class="form-horizontal">
+                                <fieldset>
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="idCred">minimumAgeCheck</label>
+                                        <div class="col-md-6">
+                                            <input class="input is-small" (keypress)="numberOnly($event)" id="minimumAgeCheck" formControlName="minimumAgeCheck"
+                                                name="minimumAgeCheck" type="text" placeholder="" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="idCred">onlyToRecipient</label>
+                                        <div class="col-md-6">
+                                            <input class="input is-small" id="onlyToRecipient" formControlName="onlyToRecipient"
+                                                name="onlyToRecipient" type="text" placeholder="" />
+                                                
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="idCred">requireSignature</label>
+                                        <div class="col-md-6">
+                                            <input class="input is-small" id="requireSignature" formControlName="requireSignature"
+                                                name="requireSignature" type="text" placeholder="" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="idCred">idCheck</label>
+                                        <div class="col-md-6">
+                                            <input class="input is-small" id="idCheck" formControlName="idCheck"
+                                                name="idCheck" type="text" placeholder="" />
+                                        </div>
+                                    </div>
+
+                                    
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="idCred">leaveAtDoorstep</label>
+                                        <div class="col-md-6">
+                                            <input class="input is-small" id="leaveAtDoorstep" formControlName="leaveAtDoorstep"
+                                                name="leaveAtDoorstep" type="text" placeholder="" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Form Name -->
+                                </fieldset>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
 
 
 
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
-                            destinationAddress
+                            Destination
                             <span class="icon">
                                 <i class="icofont icofont-credit-card"></i>
                             </span>
                         </p>
 
-                        <button class="button is-outlined" (click)="paymentDataShow ($event)" aria-label="more options">
+                        <button class="button is-outlined" (click)="destinationDataShow ($event)" aria-label="more options">
                             <span class="icon">
                                 <i class="fas fa-address-card"></i>
                             </span>
@@ -165,7 +273,7 @@
                     </header>
 
 
-                    <div class="card-content" [hidden]="!paymentDataBool">
+                    <div class="card-content" [hidden]="!destinationDataBool">
                         <div class="content">
                             <form [formGroup]="destinationAddress" class="form-horizontal">
                                 <fieldset>
@@ -202,39 +310,18 @@
                                     <!-- Form Name -->
                                 </fieldset>
                             </form>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">
-                            Recipient
-                            <span class="icon">
-                                <i class="icofont icofont-credit-card"></i>
-                            </span>
-                        </p>
-
-
-                        <button class="button is-outlined" (click)="articleDataShow1 ($event)"
-                            aria-label="more options">
-                            <span class="icon">
-                                <i class="fas fa-mail-bulk"></i>
-                            </span>
-                        </button>
-
-
-                    </header>
-
-
-                    <div class="card-content" [hidden]="!articleDataBool1">
-                        <div class="content">
                             <form [formGroup]="recipient" class="form-horizontal">
                                 <fieldset>
+
+
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="idCred">name</label>
+                                        <div class="col-md-6">
+                                            <input class="input is-small" id="name" formControlName="name"
+                                                name="name" type="text" placeholder="" />
+                                        </div>
+                                    </div>
+
                                     <div class="form-group row">
                                         <label class="labelMedium" for="idCred">email</label>
                                         <div class="col-md-6">
@@ -268,6 +355,12 @@
 
 
 
+
+             
+
+
+
+
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
@@ -277,7 +370,7 @@
                             </span>
                         </p>
 
-                        <button class="button is-outlined" (click)="customerDataShow ($event)"
+                        <button class="button is-outlined" (click)="parcelDataShow ($event)"
                             aria-label="more options">
                             <span class="icon">
                                 <i class="fas fa-archive"></i>
@@ -286,18 +379,25 @@
 
 
                     </header>
-                    <div class="card-content" [hidden]="!customerDataBool">
+                    <div class="card-content" [hidden]="!parcelDataBool">
                         <div class="content">
-                            <button (click)="addGroup()" type="button" class="button is-success button is-small"><span
-                                    class="icon-plus"></span> Add</button>
-                            <form [formGroup]="articleForm" class="form-horizontal">
+                            <button (click)="addParcel()" type="button" class="button is-success button is-small"><span
+                                    class="icon-plus"></span> Add Parcel</button>
+                            <form [formGroup]="parcelForm" class="form-horizontal">
                                 <fieldset>
                                     <div formArrayName="products"
-                                        *ngFor="let time of articleForm.controls.products?.value; let i = index; trackBy:trackByFn">
+                                        *ngFor="let time of parcelForm.controls.products?.value; let i = index; trackBy:trackByFn">
                                         <div [formGroupName]="i">
 
 
-
+                                            <div class="form-group row">
+                                                <label class="labelMedium" for="heightCm">description</label>
+                                                <div class="col-md-6">
+                                                    <input placeholder="description" 
+                                                        (ngModelChange)="changedExtraHandler($event)" type="text"
+                                                        formControlName="description" class="input is-small" />
+                                                </div>
+                                            </div>
 
                                             <div class="form-group row">
                                                 <label class="labelMedium" for="heightCm">heightCm</label>
@@ -336,10 +436,21 @@
                                                         formControlName="depthCm" class="input is-small" />
                                                 </div>
                                             </div>
+
+                                            <div class="form-group row">
+                                                <label class="labelMedium" type="text" for="depthCm">parcelShipmentIdentifier</label>
+                                                <div class="col-md-6">
+                                                    <input placeholder="parcelShipmentIdentifier" 
+                                                        (ngModelChange)="changedExtraHandler($event)" type="text"
+                                                        formControlName="parcelShipmentIdentifier" class="input is-small" />
+                                                </div>
+                                            </div>
                                         </div>
-                                        <button (click)="removeGroup(i)" type="button" id="removeBtn"
+
+                                        
+                                        <button (click)="removeParcel(i)" type="button" id="removeBtn"
                                             class="button is-danger  button is-small"><span
-                                                class="icon-close"></span>Remove</button>
+                                                class="icon-close"></span>Remove Parcel</button>
                                     </div>
 
                                     <br />
@@ -369,8 +480,8 @@
                     </header>
                     <div class="card-content" [hidden]="!itemsDataBool">
                         <div class="content">
-                            <button (click)="addGroupItems()" type="button"
-                                class="button is-success button is-small"><span class="icon-plus"></span> Add</button>
+                            <button (click)="addItems()" type="button"
+                                class="button is-success button is-small"><span class="icon-plus"></span> Add Item</button>
                             <form [formGroup]="itemsForm" class="form-horizontal">
                                 <fieldset>
                                     <div formArrayName="products"
@@ -519,9 +630,9 @@
 
 
                                         </div>
-                                        <button (click)="removeGroupItems(i)" type="button" id="removeBtn"
+                                        <button (click)="removeItems(i)" type="button" id="removeBtn"
                                             class="button is-danger  button is-small"><span
-                                                class="icon-close"></span>Remove</button>
+                                                class="icon-close"></span>Remove Item</button>
                                     </div>
 
                                     <br />
@@ -547,7 +658,7 @@
                             </span>
                         </p>
 
-                        <button class="button is-outlined" (click)="ApiDataShow ($event)" aria-label="more options">
+                        <button class="button is-outlined" (click)="apiDataShow ($event)" aria-label="more options">
                             <span class="icon">
                                 <i class="fas fa-key"></i>
                             </span>
@@ -615,9 +726,9 @@
                 <div class="column is-12">
                     <div class="column"></div>
                     <h1>Checkout Widget</h1>
-                    <div [hidden]="!avError"  id="porterbuddy-widget"></div>
-                    <div [hidden]="!avError">
-                        <button [hidden]="!avError" (click)="createOrder()" style="background:#661aff"
+                    <div [hidden]="!httpErrorBool"  id="porterbuddy-widget"></div>
+                    <div [hidden]="!httpErrorBool">
+                        <button [hidden]="!httpErrorBool" (click)="createOrder()" style="background:#661aff"
                             class="button is-info">Create Order
                             <span style="margin-right: 2%;" style="color: white !important;margin-left: 2%;"
                                 class="icon"><i style="color: white !important;margin-left: 2%;"
@@ -633,14 +744,14 @@
 
                 <div class="column is-12">
 
-                    <h2 [hidden]="!showIframe1" class="subtitle is-6">Order Created: OrderID {{orderID}}</h2>
+                    <h2 [hidden]="!showTrackingLink" class="subtitle is-6">Order Created: OrderID {{orderID}}</h2>
 
-                    <iframe [hidden]="!showIframe1" [src]="urlSafe "
+                    <iframe [hidden]="!showTrackingLink" [src]="urlSafe "
                         style="display: center; width:100%; height: 1200px;" frameborder="0" allowfullscreen></iframe>
 
                 </div>
-                <h1 [hidden]="!showIframe1">Fetched information OrderID {{orderID}} </h1>
-                <pre [hidden]="!showIframe1">{{statusData | json:2}}</pre>
+                <h1 [hidden]="!showTrackingLink">Fetched information OrderID {{orderID}} </h1>
+                <pre [hidden]="!showTrackingLink">{{statusData | json:2}}</pre>
 
                 <div class="column is-3">
                     <button (click)="showDebug()" class="button is-light">

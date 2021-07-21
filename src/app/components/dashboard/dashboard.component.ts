@@ -15,177 +15,69 @@ export class DashboardComponent implements OnInit {
 
   title = 'checkout';
   titlePB = "Create Checkout"
-  submitted = false;
-  cartDataBool = false;
-  checkoutDataBool = false;
-  customerDataBool = false;
+  debugTitle = "Show Debug";
+  expandTitle = 'Expand All';
+  
+  parcelDataBool = false;
   itemsDataBool = false;
-
-  articleDataBool = false;
-  credTestDataBool = false;
+  pickupDataBool = false;
   credDataBool = false;
+  verDataBool = false;
+
   apiDataBool = false;
-
-  paymentDataBool = false;
+  destinationDataBool = false;
   showErrorDataBool = false;
-
-  showCredentials = false;
-  showCustomer = false;
-  showCustomerShipping = false;
   expandAllBool = false;
   showIframe = false;
   showSpinner = true;
   debugBool = false;
+  recipientDataBool = false;
+  showTrackingLink = false;
+  httpErrorBool = false;
+  selectedBool = false;
+
   orderID: any;
-  articleDataBool1 = false;
-  showIframe1 = false;
   deliveryWindow: any;
-  url: string = "";
-  urlSafe: SafeResourceUrl;
-  requestData: string[];
-  bco: any;
   errorData: any;
   statusData: any;
-
   checkoutNumber: any;
-  myObj: {};
+  saveData: any;
+
+  urlSafe: SafeResourceUrl;
   checkoutObj: {};
-  avError = false;
-  cartDataForm: FormGroup;
-  credentialDataForm: FormGroup;
-  paymentDataForm: FormGroup;
-  checkoutDataForm: FormGroup;
+
+  originInfoForm: FormGroup;
   originAddress: FormGroup;
   apiKeyForm: FormGroup;
   destinationAddress: FormGroup;
-  customerFormBilling: FormGroup;
-  customerFormShipping: FormGroup;
-  customerFormAdressNr: FormGroup;
-  articleForm: FormGroup;
+  parcelForm: FormGroup;
   itemsForm: FormGroup;
-
-  articleForm1: FormGroup;
-  contactForm: FormGroup;
-  orderForm: FormGroup;
-  selectedBool = false;
+  verificationsForm: FormGroup;
+  pickupWindowsForm: FormGroup;
   parcels: FormGroup;
   recipient: FormGroup;
   pickupWindows: FormGroup;
-  saveData: any;
-  debugTitle = "Show Debug";
-  expandTitle = 'Expand All';
-  updateTitle = "InitCheckout"
+ 
 
 
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient, private formBuilder: FormBuilder, public router: Router, private CheckoutService: CheckoutService,
+  constructor(private sanitizer: DomSanitizer, private http: HttpClient, private formBuilder: FormBuilder, public router: Router,
   ) { }
 
-
-  public showDebug() {
-    if (this.debugBool == false) {
-      this.debugTitle = "Hide Debug"; this.debugBool = true; this.expandAllBool = true;
-      this.expandAll();
-    }
-    else {
-      this.debugTitle = "Show Debug";
-      this.debugBool = false;
-      this.expandAllBool = true;
-      this.expandAll();
-    }
-  }
-
-  public expandAll() {
-    if (this.expandAllBool == false) {
-      this.expandAllBool = true;
-      this.cartDataBool = true;
-      this.customerDataBool = true;
-      this.itemsDataBool = true;
-      this.articleDataBool = true;
-      this.credTestDataBool = true;
-      this.credDataBool = true;
-      this.apiDataBool = true;
-      this.paymentDataBool = true;
-      this.articleDataBool1 = true;
-      this.checkoutDataBool = true;
-      this.expandTitle = 'Collapse All';
-    }
-    else {
-      this.expandAllBool = false;
-      this.cartDataBool = false;
-      this.customerDataBool = false;
-      this.customerDataBool = false;
-      this.articleDataBool = false;
-      this.credTestDataBool = false;
-      this.credDataBool = false;
-      this.apiDataBool = false;
-
-      this.paymentDataBool = false;
-      this.articleDataBool1 = false;
-
-      this.checkoutDataBool = false;
-      this.expandTitle = 'Expand All';
-    }
-  }
-
-  public cartDataShow(event) {
-    if (this.cartDataBool == false) { this.cartDataBool = true; } else { this.cartDataBool = false; }
-  }
-
-  public customerDataShow(event) {
-    if (this.customerDataBool == false) { this.customerDataBool = true; } else { this.customerDataBool = false; }
-  }
-  public itemsDataShow(event) {
-    if (this.itemsDataBool == false) { this.itemsDataBool = true; } else { this.itemsDataBool = false; }
-  }
-
-
-  public articleDataShow(event) {
-    if (this.articleDataBool == false) { this.articleDataBool = true; } else { this.articleDataBool = false; }
-  }
-
-  public ApiDataShow(event) {
-    if (this.apiDataBool == false) { this.apiDataBool = true; } else { this.apiDataBool = false; }
-  }
-  public articleDataShow1(event) {
-    if (this.articleDataBool1 == false) { this.articleDataBool1 = true; } else { this.articleDataBool1 = false; }
-  }
-
-  public credTestDataShow(event) {
-    if (this.credTestDataBool == false) { this.credTestDataBool = true; } else { this.credTestDataBool = false; }
-  }
-
-  public credDataShow(event) {
-    if (this.credDataBool == false) { this.credDataBool = true; } else { this.credDataBool = false; }
-  }
-
-  public paymentDataShow(event) {
-    if (this.paymentDataBool == false) { this.paymentDataBool = true; } else { this.paymentDataBool = false; }
-  }
-
-
-  public checkoutDataShow(event) {
-    if (this.checkoutDataBool == false) { this.checkoutDataBool = true; } else { this.checkoutDataBool = false; }
-  }
-
-  numberOnly(event): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      return false;
-    }
-    return true;
-
-  }
-
-  createOrder() {
-    this.showErrorDataBool = false;
+  avabilityReqest() {
+    this.showIframe = false;
+    this.showTrackingLink = false;
+    this.titlePB = "Update Checkout"
+    this.httpErrorBool = true;
     let originAddress = JSON.parse(JSON.stringify(this.originAddress.value));
     let recipientAdress = JSON.parse(JSON.stringify(this.recipient.value));
     let destinationAddress = JSON.parse(JSON.stringify(this.destinationAddress.value));
-    let pickupWindows = JSON.parse(JSON.stringify(this.articleForm1.value.products));
-    let parcels = JSON.parse(JSON.stringify(this.articleForm.value.products));
-    let apiKey = JSON.parse(JSON.stringify(this.apiKeyForm.value.apiKey));
+    let pickupWindows = JSON.parse(JSON.stringify(this.pickupWindowsForm.value.products));
+    let parcels = JSON.parse(JSON.stringify(this.parcelForm.value.products));
+    let publicToken = JSON.parse(JSON.stringify(this.apiKeyForm.value.publicToken));
     let items = JSON.parse(JSON.stringify(this.itemsForm.value.products));
+
     items.forEach(element => {
+
       element.price = {
         price: element.price,
         currency: element.currency
@@ -198,43 +90,121 @@ export class DashboardComponent implements OnInit {
       delete element.currency;
       delete element.barCodevalue;
       delete element.barCodetype;
-
     });
 
+    var dataCheckout = {
+      "pickupWindows": pickupWindows,
+      "originAddress": originAddress,
+      "destinationAddress": destinationAddress,
+      "recipient": recipientAdress,
+      "products": ["delivery"],
+      "parcels": parcels,
+      "items": items,
+    }
 
+    var dataCheckoutToJson = JSON.stringify(dataCheckout);
+
+    const headers = {
+      "content-type": "application/json",
+      "accept": "application/json",
+      "x-public-token": publicToken,
+    }
+
+    this.http.post("https://corsporter.herokuapp.com/https://api.porterbuddy-test.com/availability", dataCheckoutToJson, { headers: headers }
+    ).subscribe(
+        data => {
+          this.saveData = data;
+          this.checkoutObj = dataCheckout;
+
+          (window as any).porterbuddy = {
+            token: publicToken,
+            view: "checkout",
+            availabilityResponse: data,
+            initialSelectedWindow: (data as any).deliveryWindows[0],
+
+            onSetCallbacks: function (callbacks) {
+              (window as any).forceRefreshReference = callbacks.forceRefresh;
+              (window as any).unselectDeliveryWindow = callbacks.unselectDeliveryWindow;
+              (window as any).setSelectedDeliveryWindow = callbacks.setSelectedDeliveryWindow;
+            },
+
+            onUpdateDeliveryWindows: (callback, additionalInfo) => {
+              (window as any).forceRefreshReference();
+
+              callback(this.saveData.deliveryWindows)
+            },
+
+            onSelectDeliveryWindow: (deliveryWindow) => {
+              this.selectedBool = true;
+              this.deliveryWindow = deliveryWindow;
+            }
+          }
+
+          this.httpErrorBool = true;
+          this.showErrorDataBool = false;
+          if (this.forceRefresTrue > 1) {
+            this.forceRefreshReference();
+          }
+          this.forceRefresTrue = 2;
+
+        },
+        error => {
+          this.httpErrorBool = false;
+          this.showErrorDataBool = true;
+          this.showIframe = false;
+          this.errorData = error.error;
+        }
+      );
+  }
+
+  createOrder() {
+    this.showErrorDataBool = false;
+    let originAddress = JSON.parse(JSON.stringify(this.originAddress.value));
+    let recipientAdress = JSON.parse(JSON.stringify(this.recipient.value));
+    let destinationAddress = JSON.parse(JSON.stringify(this.destinationAddress.value));
+    let parcels = JSON.parse(JSON.stringify(this.parcelForm.value.products));
+    let apiKey = JSON.parse(JSON.stringify(this.apiKeyForm.value.apiKey));
+    let items = JSON.parse(JSON.stringify(this.itemsForm.value.products));
+    let orginInfo= JSON.parse(JSON.stringify(this.originInfoForm.value ));
+    let verification= JSON.parse(JSON.stringify(this.verificationsForm.value ));
+
+    items.forEach(element => {
+      element.price = {
+        price: element.price,
+        currency: element.currency
+      }
+      element.barCode = {
+        value: element.barCodetype,
+        type: element.barCodevalue
+      }
+      delete element.currency;
+      delete element.barCodevalue;
+      delete element.barCodetype;
+    });
 
     var orderInfo = {
       "origin": {
-        "name": "Nils Johansen (Sender)",
+        "name": orginInfo.name,
         "address": originAddress,
-        "email": "testemail+sender@porterbuddy.com",
-        "phoneCountryCode": "+47",
-        "phoneNumber": "65127865"
+        "email": orginInfo.email,
+        "phoneNumber": orginInfo.phoneNumber,
+        "phoneCountryCode": orginInfo.phoneCountryCode,
       },
-
       "destination": {
-        "name": "Roger Olsen (Recipient)",
+        "name": recipientAdress.name,
         "address": destinationAddress,
         "email": recipientAdress.email,
         "phoneCountryCode": recipientAdress.phoneCountryCode,
         "phoneNumber": recipientAdress.phoneNumber,
 
         "deliveryWindow": this.deliveryWindow,
-        "verifications": {
-          "minimumAgeCheck": 16,
-          "leaveAtDoorstep": false,
-          "idCheck": true,
-          "requireSignature": false,
-          "onlyToRecipient": true
-        }
+        "verifications": verification
       },
       "parcels": parcels,
       "items": items,
-
       "product": "delivery",
       "courierInstructions": "Test",
       "shipmentIdentifier": "12345"
-
     }
 
     var randomINT = Math.random();
@@ -250,12 +220,12 @@ export class DashboardComponent implements OnInit {
     )
       .subscribe(
         data => {
-          this.showIframe1 = true;
+          this.showTrackingLink = true;
           this.selectedBool = false;
           this.orderID = (data as any).orderId
           this.showIframe = false;
           this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl((data as any)._links.userInformation.href);
-          this.getStatus();
+          this.getOrderStatus();
         },
         error => {
           this.showErrorDataBool = true;
@@ -264,7 +234,7 @@ export class DashboardComponent implements OnInit {
       );
   }
 
-  getStatus() {
+  getOrderStatus() {
     let apiKey = JSON.parse(JSON.stringify(this.apiKeyForm.value.apiKey));
     let header = new HttpHeaders();
     header = header.append('content-type', 'application/json');
@@ -283,173 +253,99 @@ export class DashboardComponent implements OnInit {
         }
       );
   }
-  avabilityReqest() {
-    this.showIframe = false;
-    this.showIframe1 = false;
-    this.titlePB = "Update Checkout"
-    this.avError = true;
-    let originAddress = JSON.parse(JSON.stringify(this.originAddress.value));
-    let recipientAdress = JSON.parse(JSON.stringify(this.recipient.value));
-    let destinationAddress = JSON.parse(JSON.stringify(this.destinationAddress.value));
-    let pickupWindows = JSON.parse(JSON.stringify(this.articleForm1.value.products));
-    let parcels = JSON.parse(JSON.stringify(this.articleForm.value.products));
-    let publicToken = JSON.parse(JSON.stringify(this.apiKeyForm.value.publicToken));
-    let items = JSON.parse(JSON.stringify(this.itemsForm.value.products));
 
-
-    var x = [];
-
-    items.forEach(element => {
-
-      element.price = {
-        price: element.price,
-        currency: element.currency
-      }
-
-      element.barCode = {
-        value: element.barCodetype,
-        type: element.barCodevalue
-      }
-      delete element.currency;
-      delete element.barCodevalue;
-      delete element.barCodetype;
-
-    });
-
-
-    var dataCheckout = {
-
-      "pickupWindows": pickupWindows,
-      "originAddress": originAddress,
-      "destinationAddress": destinationAddress,
-      "recipient": recipientAdress,
-      "products": ["delivery"],
-      "parcels": parcels,
-      "items": items,
-
+  public showDebug() {
+    if (this.debugBool == false) {
+      this.debugTitle = "Hide Debug"; this.debugBool = true; this.expandAllBool = true;
+      this.expandAll();
     }
-
-
-    var dataCheckoutToJson = JSON.stringify(dataCheckout);
-
-    const headers = {
-      "content-type": "application/json",
-      "accept": "application/json",
-      "x-public-token": publicToken, // your public token
-
-      // Public token must be sed on frontend side, for backend integration use your api key and header
-      // "x-api-key" as specified in the API documentation
+    else {
+      this.debugTitle = "Show Debug";
+      this.debugBool = false;
+      this.expandAllBool = true;
+      this.expandAll();
     }
-
-
-    this.http.post("https://corsporter.herokuapp.com/https://api.porterbuddy-test.com/availability", dataCheckoutToJson, { headers: headers }
-    )
-      .subscribe(
-        data => {
-
-          this.saveData = data;
-          this.checkoutObj = dataCheckout;
-          this.myObj = {};
-
-          (window as any).porterbuddy = {
-            token: publicToken, // your public token
-            view: "checkout",
-            availabilityResponse: data,
-            initialSelectedWindow: (data as any).deliveryWindows[0],
-
-
-            //  initialSelectedWindow	 : availabilityResponse.deliveryWindows[3],
-
-            onSetCallbacks: function (callbacks) {
-              (window as any).forceRefreshReference = callbacks.forceRefresh;
-              (window as any).unselectDeliveryWindow = callbacks.unselectDeliveryWindow;
-              (window as any).setSelectedDeliveryWindow = callbacks.setSelectedDeliveryWindow;
-            },
-
-
-            onUpdateDeliveryWindows: (callback, additionalInfo) => {
-              (window as any).forceRefreshReference();
-
-              callback(this.saveData.deliveryWindows)
-            },
-
-
-            onSelectDeliveryWindow: (deliveryWindow) => {
-              this.selectedBool = true;
-              this.deliveryWindow = deliveryWindow;
-            }
-          }
-          this.avError = true;
-          this.showErrorDataBool = false;
-          if (this.hej > 1) {
-            this.hej1();
-          }
-          this.hej = 2;
-
-
-        },
-        error => {
-          this.avError = false;
-          this.showErrorDataBool = true;
-
-          this.showIframe = false;
-          this.errorData = error.error;
-        }
-
-      );
-
   }
 
-  hej = 1;
+  public expandAll() {
+    if (this.expandAllBool == false) {
+      this.expandAllBool = true;
+      this.parcelDataBool = true;
+      this.itemsDataBool = true;
+      this.pickupDataBool = true;
+      this.credDataBool = true;
+      this.verDataBool = true;
+      this.apiDataBool = true;
+      this.destinationDataBool = true;
+      this.recipientDataBool = true;
+      this.expandTitle = 'Collapse All';
+    }
+    else {
+      this.expandAllBool = false;
+      this.verDataBool = false;
+      this.parcelDataBool = false;
+      this.parcelDataBool = false;
+      this.pickupDataBool = false;
+      this.credDataBool = false;
+      this.apiDataBool = false;
+      this.destinationDataBool = false;
+      this.recipientDataBool = false;
 
-  hej1() {
+      this.expandTitle = 'Expand All';
+    }
+  }
 
+ 
+  public parcelDataShow(event) {
+    if (this.parcelDataBool == false) { this.parcelDataBool = true; } else { this.parcelDataBool = false; }
+  }
+  public itemsDataShow(event) {
+    if (this.itemsDataBool == false) { this.itemsDataBool = true; } else { this.itemsDataBool = false; }
+  }
+
+  public pickupWindowsDataShow(event) {
+    if (this.pickupDataBool == false) { this.pickupDataBool = true; } else { this.pickupDataBool = false; }
+  }
+
+  public apiDataShow(event) {
+    if (this.apiDataBool == false) { this.apiDataBool = true; } else { this.apiDataBool = false; }
+  }
+  public recipientDataShow(event) {
+    if (this.recipientDataBool == false) { this.recipientDataBool = true; } else { this.recipientDataBool = false; }
+  }
+
+  public orginDataShow(event) {
+    if (this.credDataBool == false) { this.credDataBool = true; } else { this.credDataBool = false; }
+  }
+
+  public verificationDataShow(event) {
+    if (this.verDataBool == false) { this.verDataBool = true; } else { this.verDataBool = false; }
+  }
+
+  public destinationDataShow(event) {
+    if (this.destinationDataBool == false) { this.destinationDataBool = true; } else { this.destinationDataBool = false; }
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
+  forceRefresTrue = 1;
+
+  forceRefreshReference() {
     (window as any).forceRefreshReference();
-
   }
 
   ngOnInit() {
-
-    this.cartDataForm = this.formBuilder.group({
-      shipping: [15, Validators.required],
-      shippingtax: [1.25, Validators.required],
-      handling: [23, [Validators.required, Validators.email]],
-      handlingtax: [1.25, [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required],
-      acceptTerms: [false, Validators.requiredTrue],
-    },
-
-    );
-    this.credentialDataForm = this.formBuilder.group({
-      id: ['17882', Validators.required],
-      secret: ['165964686216', Validators.required],
-      version: ['2.1.7', Validators.required],
-      client: ['Pluginname:PorterBuddy:CheckoutDemo', Validators.required],
-
-    });
-
-    this.paymentDataForm = this.formBuilder.group({
-      orderid: ['123456', Validators.required],
-      cancelurl: ['https://yourclient.com/PorterBuddycheckout/cancel.php', Validators.required],
-      accepturl: ['https://k8879.hemsida.eu/PorterBuddy/checkout/success/success.php', Validators.required],
-      callbackurl: ['https://yourclient.com/PorterBuddycheckout/callback.php', Validators.required],
-      returnmethod: ['POST', Validators.required],
-    });
-
-    this.checkoutDataForm = this.formBuilder.group({
-      companyView: ['false', Validators.required],
-      redirectOnSuccess: ['true', Validators.required],
-      hideShippingAddress: ['false', Validators.required],
-      terms: ['https://yourclient.com/terms', Validators.required],
-      privacyPolicy: ['https://yourclient.com/terms', Validators.required]
-    });
-
-
+    var randomINT = Math.random();
 
     this.pickupWindows = this.formBuilder.group({
       start: ["2021-11-13T10:00+01:00", Validators.required],
       end: ["2021-11-13T20:00+01:00", Validators.required],
-
     });
 
     this.parcels = this.formBuilder.group({
@@ -457,17 +353,17 @@ export class DashboardComponent implements OnInit {
       heightCm: ['25', Validators.required],
       depthCm: ['45', Validators.required],
       weightGrams: ['2000 ', Validators.required],
-
+      parcelShipmentIdentifier: [randomINT.toString(), Validators.required],
 
     });
 
     this.recipient = this.formBuilder.group({
+      name: ['Roger Olsen (Recipient)', Validators.required],
       email: ['testemail+recipient@porterbuddy.com', Validators.required],
       phoneCountryCode: ['+47', Validators.required],
       phoneNumber: ['65127865', Validators.required],
 
     });
-
 
     this.originAddress = this.formBuilder.group({
       streetName: ['Keysers Gate', Validators.required],
@@ -477,13 +373,20 @@ export class DashboardComponent implements OnInit {
       country: ['Norway', Validators.required]
     });
 
+    this.originInfoForm = this.formBuilder.group({
+      name: ['Nils Johansen (Sender)', Validators.required],
+      email: ['testemail+recipient@porterbuddy.com', Validators.required],
+      phoneCountryCode: ['+47', Validators.required],
+      phoneNumber: ['65127865', Validators.required],
+    
+
+    });
+
     this.apiKeyForm = this.formBuilder.group({
       apiKey: ['yOxaPhpechYuey1mi16JZNI4p4laved0LKuOw8KS', Validators.required],
       publicToken: ['PeVR7JvLZSKcbQWolrQvKj3vdxEE1B6kRTixeTjM', Validators.required],
 
     });
-
-
 
     this.destinationAddress = this.formBuilder.group({
       streetName: ['Høyenhallveien Gate', Validators.required],
@@ -493,10 +396,17 @@ export class DashboardComponent implements OnInit {
       country: ['Norway', Validators.required]
     });
 
+    this.verificationsForm = this.formBuilder.group({
+      minimumAgeCheck: ['16', Validators.required],
+      leaveAtDoorstep: ['true', Validators.required],
+      idCheck: ['false', Validators.required],
+      requireSignature: ['false', Validators.required],
+      onlyToRecipient: ['false', Validators.required]
+    });
 
-    this.articleForm = this.formBuilder.group({
+    this.parcelForm = this.formBuilder.group({
       products: this.formBuilder.array([
-        this.initArticle()
+        this.initParcel()
       ])
     });
 
@@ -506,81 +416,28 @@ export class DashboardComponent implements OnInit {
       ])
     });
 
-
-    this.articleForm1 = this.formBuilder.group({
+    this.pickupWindowsForm = this.formBuilder.group({
       products: this.formBuilder.array([
-        this.initArticle1()
+        this.initDate()
       ])
     });
 
-    this.customerFormBilling = this.formBuilder.group({
-      firstname: ['Testperson', Validators.required],
-      lastname: ['Approved', Validators.required],
-      company: ['Approved', Validators.required],
-      street: ['Teststreet', Validators.required],
-      street2: ['Street2', Validators.required],
-      zip: ['12345', Validators.required],
-      city: ['Testcity', Validators.required],
-      country: ['Sverige', Validators.required],
-      phone: ['0712345678', Validators.required],
-      email: ['test@developer.PorterBuddy.se', Validators.required],
-    }
-    );
-
-    this.customerFormShipping = this.formBuilder.group({
-      firstname: ['Testperson', Validators.required],
-      lastname: ['Approved', Validators.required],
-      company: ['Approved', Validators.required],
-      street: ['Teststreet', Validators.required],
-      street2: ['Street2', Validators.required],
-      zip: ['54321', Validators.required],
-      city: ['Testcity', Validators.required],
-      country: ['Sverige', Validators.required],
-    }
-    );
-
-    this.customerFormAdressNr = this.formBuilder.group({
-      custonernr: ['12', Validators.required],
-      pno: ['195501011018', Validators.required],
-    }
-    );
     this.avabilityReqest();
-
   }
 
-  public changedExtraHandler(events) {
+  public changedExtraHandler(events) {}
 
-  }
-  public customerExtraHandler(events) {
-    if (this.showCustomer == false) {
-      this.showCustomer = true;
-    }
-    else {
-      this.showCustomer = false;
-      this.showCustomerShipping = false;
+  initParcel() {
+    var randomINT = Math.random();
 
-    }
-  }
-
-  public customerShippingAdress(events) {
-    if (this.showCustomer == true && this.showCustomerShipping == false) {
-      this.showCustomerShipping = true;
-    }
-    else if (this.showCustomer == true && this.showCustomerShipping == true) {
-      this.showCustomerShipping = false;
-    }
-  }
-
-  trackByFn(index: number, item: any) {
-    return item.trackingId;
-  }
-
-  initArticle() {
     return this.formBuilder.group({
       heightCm: this.formBuilder.control('25', Validators.required),
       widthCm: this.formBuilder.control('30', Validators.required),
       weightGrams: this.formBuilder.control('2000', Validators.required),
       depthCm: this.formBuilder.control('45', Validators.required),
+      parcelShipmentIdentifier: [randomINT.toString(), Validators.required],
+      description:  ["Shoes", Validators.required],
+
     });
   }
 
@@ -590,14 +447,11 @@ export class DashboardComponent implements OnInit {
       name: this.formBuilder.control('Fancy Sneakers', Validators.required),
       sku: this.formBuilder.control('FANCYSNEAKER43', Validators.required),
       weightGrams: this.formBuilder.control('2000', Validators.required),
-
       widthCm: this.formBuilder.control('20', Validators.required),
       heightCm: this.formBuilder.control('10', Validators.required),
       depthCm: this.formBuilder.control('35', Validators.required),
-
       description: this.formBuilder.control('Fancy sneakers (red/blue) in size 43', Validators.required),
       category: this.formBuilder.control('45', Validators.required),
-
       brand: this.formBuilder.control('Shoes', Validators.required),
       imageUrl: this.formBuilder.control('https://awesomewebshop.com/images/5fd71d6f-b0be-4480-900f-f3d008a0bc62.png', Validators.required),
       price: this.formBuilder.control('79900', Validators.required),
@@ -610,7 +464,7 @@ export class DashboardComponent implements OnInit {
 
   x = 14;
 
-  initArticle1() {
+  initDate() {
     this.x = this.x + 1;
     return this.formBuilder.group({
       start: this.formBuilder.control('2021-09-' + this.x.toString() + 'T10:00+01:00', Validators.required),
@@ -619,47 +473,40 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  addGroup() {
-    // add address to the list
-    const control = <FormArray>this.articleForm.controls['products'];
-    control.push(this.initArticle());
-
+  addParcel() {
+    const control = <FormArray>this.parcelForm.controls['products'];
+    control.push(this.initParcel());
   }
 
-  removeGroup(i: number) {
-    // remove address from the list
-    const control = <FormArray>this.articleForm.controls['products'];
+  removeParcel(i: number) {
+    const control = <FormArray>this.parcelForm.controls['products'];
     control.removeAt(i);
-
   }
 
-  addGroupItems() {
-    // add address to the list
+  addItems() {
     const control = <FormArray>this.itemsForm.controls['products'];
     control.push(this.initItems());
-
   }
 
-  removeGroupItems(i: number) {
-    // remove address from the list
+  removeItems(i: number) {
     const control = <FormArray>this.itemsForm.controls['products'];
     control.removeAt(i);
-
   }
 
-
-  addGroup1() {
-    // add address to the list
-    const control = <FormArray>this.articleForm1.controls['products'];
-    control.push(this.initArticle1());
-
+  addPickupWindows() {
+    const control = <FormArray>this.pickupWindowsForm.controls['products'];
+    control.push(this.initDate());
   }
 
-  removeGroup1(i: number) {
+  RemovePickupWindows(i: number) {
     // remove address from the list
-    const control = <FormArray>this.articleForm1.controls['products'];
+    const control = <FormArray>this.pickupWindowsForm.controls['products'];
     control.removeAt(i);
 
+  }
+  
+  trackByFn(index: number, item: any) {
+    return item.trackingId;
   }
 
 }
