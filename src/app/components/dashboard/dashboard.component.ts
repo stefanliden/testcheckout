@@ -339,7 +339,7 @@ export class DashboardComponent implements OnInit {
 
   hej1() {
 
-    // (window as any).forceRefreshReference();
+    (window as any).forceRefreshReference();
 
   }
 
