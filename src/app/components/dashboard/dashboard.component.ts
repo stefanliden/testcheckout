@@ -45,6 +45,8 @@ export class DashboardComponent implements OnInit {
   requestData: string[];
   bco: any;
   errorData: any;
+  statusData: any;
+
   checkoutNumber: any;
   myObj: {};
   checkoutObj: {};
@@ -91,8 +93,6 @@ export class DashboardComponent implements OnInit {
       this.expandAll();
     }
   }
-
-
 
   public expandAll() {
     if (this.expandAllBool == false) {
@@ -176,11 +176,8 @@ export class DashboardComponent implements OnInit {
 
   }
 
-
-
-  createOrder() { 
-    this.showErrorDataBool = false; 
-
+  createOrder() {
+    this.showErrorDataBool = false;
     let originAddress = JSON.parse(JSON.stringify(this.originAddress.value));
     let recipientAdress = JSON.parse(JSON.stringify(this.recipient.value));
     let destinationAddress = JSON.parse(JSON.stringify(this.destinationAddress.value));
@@ -247,7 +244,6 @@ export class DashboardComponent implements OnInit {
     header = header.append('Access-Control-Allow-Methods', 'POST');
     header = header.append('x-api-key', apiKey);
     header = header.append('Idempotency-Key', randomINT.toString());
-
     var orderToString = JSON.stringify(orderInfo);
 
     this.http.post("https://corsporter.herokuapp.com/https://api.porterbuddy-test.com/order", orderToString, { headers: header }
@@ -259,17 +255,33 @@ export class DashboardComponent implements OnInit {
           this.orderID = (data as any).orderId
           this.showIframe = false;
           this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl((data as any)._links.userInformation.href);
+          this.getStatus();
         },
         error => {
-          this.showIframe1 = false;
           this.showErrorDataBool = true;
+          this.errorData = error.error;
+        }
+      );
+  }
 
-          this.myObj = error.error[0];
+  getStatus() {
+    let apiKey = JSON.parse(JSON.stringify(this.apiKeyForm.value.apiKey));
+    let header = new HttpHeaders();
+    header = header.append('content-type', 'application/json');
+    header = header.append('Access-Control-Allow-Origin', '*');
+    header = header.append('x-api-key', apiKey);
+
+    this.http.get("https://corsporter.herokuapp.com/https://api.porterbuddy-test.com/order/" + this.orderID + "/self", { headers: header }
+    )
+      .subscribe(
+        data => {
+          this.statusData = data;
+        },
+        error => {
+          this.statusData = error.error;
 
         }
-
       );
-
   }
   avabilityReqest() {
     this.showIframe = false;
@@ -283,12 +295,12 @@ export class DashboardComponent implements OnInit {
     let parcels = JSON.parse(JSON.stringify(this.articleForm.value.products));
     let publicToken = JSON.parse(JSON.stringify(this.apiKeyForm.value.publicToken));
     let items = JSON.parse(JSON.stringify(this.itemsForm.value.products));
- 
-    
+
+
     var x = [];
 
     items.forEach(element => {
-    
+
       element.price = {
         price: element.price,
         currency: element.currency
@@ -304,7 +316,7 @@ export class DashboardComponent implements OnInit {
 
     });
 
-      
+
     var dataCheckout = {
 
       "pickupWindows": pickupWindows,
@@ -395,9 +407,6 @@ export class DashboardComponent implements OnInit {
     (window as any).forceRefreshReference();
 
   }
-
-
-
 
   ngOnInit() {
 
@@ -575,7 +584,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  
+
   initItems() {
     return this.formBuilder.group({
       name: this.formBuilder.control('Fancy Sneakers', Validators.required),
