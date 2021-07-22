@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormBuilder, FormControl, FormArray, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CheckoutService } from '../../checkout.service';
+import * as moment from 'moment';
 
 
 @Component({
@@ -57,8 +57,10 @@ export class DashboardComponent implements OnInit {
   parcels: FormGroup;
   recipient: FormGroup;
   pickupWindows: FormGroup;
- 
-
+  fromTimeAdd = 0;
+  fromTime = moment().add(this.fromTimeAdd,'day').set('hours',0).set('minute',0).set('second',0).format();
+  toTimeAdd = 0;
+  toTime = moment().add(this.fromTimeAdd,'day').set('hours',23).set('minute',23).set('second',23).format();
 
   constructor(private sanitizer: DomSanitizer, private http: HttpClient, private formBuilder: FormBuilder, public router: Router,
   ) { }
@@ -348,6 +350,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+
     var randomINT = Math.random();
 
     this.pickupWindows = this.formBuilder.group({
@@ -472,10 +475,11 @@ export class DashboardComponent implements OnInit {
   initDate() {
     this.x = this.x + 1;
     return this.formBuilder.group({
-      start: this.formBuilder.control('2021-09-' + this.x.toString() + 'T10:00+01:00', Validators.required),
-      end: this.formBuilder.control('2021-09-' + this.x.toString() + 'T18:00+01:00', Validators.required),
+      start: this.formBuilder.control(this.fromTime, Validators.required),
+      end: this.formBuilder.control(this.toTime, Validators.required),
 
     });
+    
   }
 
   addParcel() {
@@ -499,11 +503,18 @@ export class DashboardComponent implements OnInit {
   }
 
   addPickupWindows() {
+    this.fromTimeAdd++;
+    this.toTimeAdd++;
+    this.toTime = moment().add(this.toTimeAdd,'day').set('hours',23).set('minute',23).set('second',23).format();
+    this.fromTime = moment().add(this.fromTimeAdd,'day').set('hours',0).set('minute',0).set('second',0).format();
     const control = <FormArray>this.pickupWindowsForm.controls['products'];
     control.push(this.initDate());
   }
 
   RemovePickupWindows(i: number) {
+    this.fromTimeAdd--;
+    this.toTimeAdd--;
+
     // remove address from the list
     const control = <FormArray>this.pickupWindowsForm.controls['products'];
     control.removeAt(i);

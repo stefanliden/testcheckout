@@ -35,6 +35,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "font-awesome": "^4.7.0",
+    "moment": "^2.29.1",
     "ng-chartist": "^4.1.0",
     "ng2-charts": "^2.4.3",
     "ng2-google-charts": "^4.0.0",
