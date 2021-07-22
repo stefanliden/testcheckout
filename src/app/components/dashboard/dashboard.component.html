@@ -713,7 +713,12 @@
                     <pre [hidden]="!showErrorDataBool">{{errorData | json:4}}</pre>
                 </div>
 
-
+                <div class="column is-3">
+                    <button (click)="showDebug()" class="button is-light">
+                        <span style="margin-right:4%" class="icon"><i style="margin-left:2%"
+                                class="fas fa-search"></i></span> {{debugTitle}}
+                    </button>
+                </div>
                 <div class="column is-12">
 
                     <h2 [hidden]="!showTrackingLink" class="subtitle is-6">Order Created: OrderID {{orderID}}</h2>
@@ -725,15 +730,23 @@
                 <h1 [hidden]="!showTrackingLink">Fetched information OrderID {{orderID}} </h1>
                 <pre [hidden]="!showTrackingLink">{{statusData | json:2}}</pre>
 
-                <div class="column is-3">
-                    <button (click)="showDebug()" class="button is-light">
-                        <span style="margin-right:4%" class="icon"><i style="margin-left:2%"
-                                class="fas fa-search"></i></span> {{debugTitle}}
-                    </button>
-                </div>
+            
             </div>
         </div>
+        <div  class="column is-12" >
+            <h3 [hidden]="!debugBool">Avability Request</h3>
+            <pre [hidden]="!debugBool">{{checkoutObj | json:4}}</pre>
+            <h3 [hidden]="!debugBool">Avability Response</h3>
+            <pre [hidden]="!debugBool">{{saveData | json:4}}</pre>
+            <h3 [hidden]="!debugBool">Order Request</h3>
+            <pre [hidden]="!debugBool">{{orderDataRequest | json:4}}</pre>
+            <h3 [hidden]="!debugBool">Order Response</h3>
+            <pre [hidden]="!debugBool">{{orderData | json:4}}</pre>
+        
+        </div>
+        
     </div>
 </div>
 
-<pre [hidden]="!debugBool">{{checkoutObj | json:4}}</pre>
+
+

@@ -42,10 +42,11 @@ export class DashboardComponent implements OnInit {
   statusData: any;
   checkoutNumber: any;
   saveData: any;
+  orderData: any;
+  orderDataRequest:any;
 
   urlSafe: SafeResourceUrl;
   checkoutObj: {};
-
   originInfoForm: FormGroup;
   originAddress: FormGroup;
   apiKeyForm: FormGroup;
@@ -57,10 +58,10 @@ export class DashboardComponent implements OnInit {
   parcels: FormGroup;
   recipient: FormGroup;
   pickupWindows: FormGroup;
-  fromTimeAdd = 0;
-  fromTime = moment().add(this.fromTimeAdd,'day').set('hours',0).set('minute',0).set('second',0).format();
-  toTimeAdd = 0;
+  fromTimeAdd = 1;
+  toTimeAdd = 1;
   toTime = moment().add(this.fromTimeAdd,'day').set('hours',23).set('minute',23).set('second',23).format();
+  fromTime = moment().add(this.fromTimeAdd,'day').set('hours',0).set('minute',0).set('second',0).format();
 
   constructor(private sanitizer: DomSanitizer, private http: HttpClient, private formBuilder: FormBuilder, public router: Router,
   ) { }
@@ -74,6 +75,8 @@ export class DashboardComponent implements OnInit {
  
 
   avabilityReqest() {
+    this.orderDataRequest = {};
+    this.orderData = {};
     this.showIframe = false;
     this.showTrackingLink = false;
     this.titlePB = "Update Checkout"
@@ -191,8 +194,11 @@ export class DashboardComponent implements OnInit {
       delete element.barCodevalue;
       delete element.barCodetype;
     });
+    var orderInfo ={};
 
-    var orderInfo = {
+    if(this.deliveryWindow.consolidated == false){
+
+     orderInfo = {
       "origin": {
         "name": orginInfo.name,
         "address": originAddress,
@@ -214,9 +220,37 @@ export class DashboardComponent implements OnInit {
       "items": items,
       "product": "delivery",
       "courierInstructions": "Test",
-      "shipmentIdentifier": "12345"
     }
+   
+    }else{
+      orderInfo = {
+        "origin": {
+          "name": orginInfo.name,
+          "address": originAddress,
+          "email": orginInfo.email,
+          "phoneNumber": orginInfo.phoneNumber,
+          "phoneCountryCode": orginInfo.phoneCountryCode,
+        },
+        "destination": {
+          "name": recipientAdress.name,
+          "address": destinationAddress,
+          "email": recipientAdress.email,
+          "phoneCountryCode": recipientAdress.phoneCountryCode,
+          "phoneNumber": recipientAdress.phoneNumber,
+  
+          "consolidatedWindow": {
+            "token" :this.deliveryWindow.token
+          },
+          "verifications": verification
+        },
+        "parcels": parcels,
+        "items": items,
+        "product": "delivery",
+        "courierInstructions": "Test",
+      }
 
+    }
+    this.orderDataRequest = orderInfo;
     var randomINT = Math.random();
     let header = new HttpHeaders();
     header = header.append('content-type', 'application/json');
@@ -230,6 +264,7 @@ export class DashboardComponent implements OnInit {
     )
       .subscribe(
         data => {
+          this.orderData = data;
           this.showTrackingLink = true;
           this.selectedBool = false;
           this.orderID = (data as any).orderId
