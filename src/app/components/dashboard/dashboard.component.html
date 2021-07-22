@@ -25,7 +25,6 @@
                     </div>
                 </div>
 
-
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
@@ -82,7 +81,6 @@
                     </div>
                 </div>
 
-
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
@@ -115,14 +113,14 @@
                                         <label class="labelMedium" for="idCred">streetNumber</label>
                                         <div class="col-md-6">
                                             <input class="input is-small" id="streetNumber"
-                                                formControlName="streetNumber" name="streetNumber" type="text"
+                                                formControlName="streetNumber" name="streetNumber" (keypress)="numberOnly($event)" type="text"
                                                 placeholder="" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="labelMedium" for="idCred">postalCode</label>
                                         <div class="col-md-6">
-                                            <input class="input is-small" id="postalCode" formControlName="postalCode"
+                                            <input class="input is-small" id="postalCode" (keypress)="numberOnly($event)" formControlName="postalCode"
                                                 name="postalCode" type="text" placeholder="" />
                                         </div>
                                     </div>
@@ -178,83 +176,6 @@
                     </div>
                 </div>
 
-
-
-
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">
-                            Verification
-                            <span class="icon">
-                                <i class="icofont icofont-credit-card"></i>
-                            </span>
-                        </p>
-                        <button class="button is-outlined" (click)="verificationDataShow ($event)" aria-label="more options">
-                            <span class="icon">
-                                <i class="fas fa-dolly"></i>
-                            </span>
-                        </button>
-                    </header>
-
-
-
-                    <div class="card-content" [hidden]="!verDataBool">
-                        <div class="content">
-                      
-                            <form [formGroup]="verificationsForm" class="form-horizontal">
-                                <fieldset>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">minimumAgeCheck</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" (keypress)="numberOnly($event)" id="minimumAgeCheck" formControlName="minimumAgeCheck"
-                                                name="minimumAgeCheck" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">onlyToRecipient</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="onlyToRecipient" formControlName="onlyToRecipient"
-                                                name="onlyToRecipient" type="text" placeholder="" />
-                                                
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">requireSignature</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="requireSignature" formControlName="requireSignature"
-                                                name="requireSignature" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">idCheck</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="idCheck" formControlName="idCheck"
-                                                name="idCheck" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-
-                                    
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">leaveAtDoorstep</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="leaveAtDoorstep" formControlName="leaveAtDoorstep"
-                                                name="leaveAtDoorstep" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Form Name -->
-                                </fieldset>
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-
-
-
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
@@ -266,10 +187,9 @@
 
                         <button class="button is-outlined" (click)="destinationDataShow ($event)" aria-label="more options">
                             <span class="icon">
-                                <i class="fas fa-address-card"></i>
+                                <i class="fas fa-dolly"></i>
                             </span>
                         </button>
-
                     </header>
 
 
@@ -352,14 +272,82 @@
                     </div>
                 </div>
 
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            Verification
+                            <span class="icon">
+                                <i class="icofont icofont-credit-card"></i>
+                            </span>
+                        </p>
+                        <button class="button is-outlined" (click)="verificationDataShow ($event)" aria-label="more options">
+                            <span class="icon">
+                                <i class="fas fa-address-card"></i>
+                            </span>
+                        </button>
+                    </header>
 
 
 
+                    <div class="card-content" [hidden]="!verDataBool">
+                        <div class="content">
+                      
+                            <form [formGroup]="verificationsForm" class="form-horizontal">
+                                <fieldset>
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="idCred">minimumAgeCheck</label>
+                                        <div class="col-md-6">
+                                            <input class="input is-small" (keypress)="numberOnly($event)" id="minimumAgeCheck" formControlName="minimumAgeCheck"
+                                                name="minimumAgeCheck" type="text" placeholder="" />
+                                        </div>
+                                    </div>
 
-             
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="idCred">onlyToRecipient</label>
+                                        <div class="col-md-6">
+                                                <select  class="select" formControlName="onlyToRecipient">
+                                                    <option *ngFor="let veri of verificationBool" [ngValue]="veri.id">{{veri.id}}</option>
+                                                  </select>
+                                        </div>
+                                    </div>
 
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="idCred">requireSignature</label>
+                                        <div class="col-md-6">
+                                            <select class="select"  formControlName="requireSignature">
+                                                <option *ngFor="let veri of verificationBool" [ngValue]="veri.id">{{veri.id}}</option>
+                                              </select>
+                                        </div>
+                                    </div>
 
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="idCred">idCheck</label>
+                                        <div class="col-md-6">
+                                                <select class="select"  formControlName="idCheck">
+                                                    <option *ngFor="let veri of verificationBool" [ngValue]="veri.id">{{veri.id}}</option>
+                                                  </select>
+                                        </div>
+                                    </div>
 
+                                 
+
+                                         
+                                    <div class="form-group row">
+                                        <label class="labelMedium" for="idCred">leaveAtDoorstep</label>
+                                        <div class="col-md-6">
+                                            <select class="select" formControlName="leaveAtDoorstep">
+                                                <option *ngFor="let veri of verificationBool" [ngValue]="veri.id">{{veri.id}}</option>
+                                              </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Form Name -->
+                                </fieldset>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
 
                 <div class="card">
                     <header class="card-header">
@@ -459,7 +447,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div class="card">
                     <header class="card-header">
@@ -642,13 +629,6 @@
                     </div>
                 </div>
 
-
-
-
-
-
-
-
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
@@ -692,14 +672,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
 
             </div>
         </div>

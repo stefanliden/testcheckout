@@ -63,6 +63,14 @@ export class DashboardComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer, private http: HttpClient, private formBuilder: FormBuilder, public router: Router,
   ) { }
 
+
+  verificationBool = [
+    { id: "true" },
+    { id: "false" },
+
+  ];
+ 
+
   avabilityReqest() {
     this.showIframe = false;
     this.showTrackingLink = false;
@@ -290,7 +298,6 @@ export class DashboardComponent implements OnInit {
       this.apiDataBool = false;
       this.destinationDataBool = false;
       this.recipientDataBool = false;
-
       this.expandTitle = 'Expand All';
     }
   }
@@ -437,7 +444,6 @@ export class DashboardComponent implements OnInit {
       depthCm: this.formBuilder.control('45', Validators.required),
       parcelShipmentIdentifier: [randomINT.toString(), Validators.required],
       description:  ["Shoes", Validators.required],
-
     });
   }
 
@@ -458,7 +464,6 @@ export class DashboardComponent implements OnInit {
       currency: this.formBuilder.control('NOK', Validators.required),
       barCodevalue: this.formBuilder.control('123-456-789', Validators.required),
       barCodetype: this.formBuilder.control('CODE128', Validators.required),
-
     });
   }
 
