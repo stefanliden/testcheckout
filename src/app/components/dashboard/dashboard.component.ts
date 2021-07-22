@@ -4,6 +4,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormBuilder, FormControl, FormArray, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -63,7 +64,7 @@ export class DashboardComponent implements OnInit {
   toTime = moment().add(this.fromTimeAdd,'day').set('hours',23).set('minute',23).set('second',23).format();
   fromTime = moment().add(this.fromTimeAdd,'day').set('hours',0).set('minute',0).set('second',0).format();
 
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient, private formBuilder: FormBuilder, public router: Router,
+  constructor(private toastr: ToastrService, private sanitizer: DomSanitizer, private http: HttpClient, private formBuilder: FormBuilder, public router: Router,
   ) { }
 
 
@@ -128,7 +129,9 @@ export class DashboardComponent implements OnInit {
         data => {
           this.saveData = data;
           this.checkoutObj = dataCheckout;
-
+  this.toastr.success('Checkout Updated', 'PorterBuddy', {
+  timeOut: 1000,
+});
           (window as any).porterbuddy = {
             token: publicToken,
             view: "checkout",
@@ -162,6 +165,9 @@ export class DashboardComponent implements OnInit {
 
         },
         error => {
+          this.toastr.error('Could not retrieve data', 'PorterBuddy', {
+            timeOut: 1000,
+          });
           this.httpErrorBool = false;
           this.showErrorDataBool = true;
           this.showIframe = false;
@@ -264,15 +270,22 @@ export class DashboardComponent implements OnInit {
     )
       .subscribe(
         data => {
+       
           this.orderData = data;
           this.showTrackingLink = true;
           this.selectedBool = false;
           this.orderID = (data as any).orderId
+          this.toastr.success('PorterBuddy Order' + ' ' + this.orderID  +' ' + 'created', 'PorterBuddy', {
+            timeOut: 2000,
+          });
           this.showIframe = false;
           this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl((data as any)._links.userInformation.href);
           this.getOrderStatus();
         },
         error => {
+          this.toastr.error('Could not create order', 'PorterBuddy', {
+            timeOut: 1000,
+          });
           this.showErrorDataBool = true;
           this.errorData = error.error;
         }
@@ -495,8 +508,8 @@ export class DashboardComponent implements OnInit {
       heightCm: this.formBuilder.control('10', Validators.required),
       depthCm: this.formBuilder.control('35', Validators.required),
       description: this.formBuilder.control('Fancy sneakers (red/blue) in size 43', Validators.required),
-      category: this.formBuilder.control('45', Validators.required),
-      brand: this.formBuilder.control('Shoes', Validators.required),
+      category: this.formBuilder.control('Shoes', Validators.required),
+      brand: this.formBuilder.control('Perfect Shoes', Validators.required),
       imageUrl: this.formBuilder.control('https://awesomewebshop.com/images/5fd71d6f-b0be-4480-900f-f3d008a0bc62.png', Validators.required),
       price: this.formBuilder.control('79900', Validators.required),
       currency: this.formBuilder.control('NOK', Validators.required),

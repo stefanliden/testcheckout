@@ -200,14 +200,14 @@
                                     <div class="form-group row">
                                         <label class="labelMedium" for="idCred">streetName</label>
                                         <div class="col-md-6">
-                                            <input class="input is-small" id="streetNa3me" formControlName="streetName"
+                                            <input class="input is-small"  id="streetNa3me" formControlName="streetName"
                                                 name="streetName" type="text" placeholder="" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">streetNumber</label>
+                                        <label class="labelMedium"  for="idCred">streetNumber</label>
                                         <div class="col-md-6">
-                                            <input class="input is-small" id="streetNumber"
+                                            <input class="input is-small" (keypress)="numberOnly($event)" id="streetNumber"
                                                 formControlName="streetNumber" name="streetNumber" type="text"
                                                 placeholder="" />
                                         </div>
@@ -215,7 +215,7 @@
                                     <div class="form-group row">
                                         <label class="labelMedium" for="idCred">postalCode</label>
                                         <div class="col-md-6">
-                                            <input class="input is-small" id="postalCoded" formControlName="postalCode"
+                                            <input class="input is-small" (keypress)="numberOnly($event)" id="postalCoded" formControlName="postalCode"
                                                 name="postalCode" type="text" placeholder="" />
                                         </div>
                                     </div>
@@ -246,7 +246,7 @@
                                         <label class="labelMedium" for="idCred">email</label>
                                         <div class="col-md-6">
                                             <input class="input is-small" id="email" formControlName="email"
-                                                name="email" type="text" placeholder="" />
+                                                name="email" type="email" placeholder="" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -632,7 +632,7 @@
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
-                            API Keys
+                            Test API Keys
                             <span class="icon">
                                 <i class="icofont icofont-credit-card"></i>
                             </span>
@@ -733,6 +733,8 @@
             
             </div>
         </div>
+
+        
         <div  class="column is-12" >
             <h3 [hidden]="!debugBool">Avability Request</h3>
             <pre [hidden]="!debugBool">{{checkoutObj | json:4}}</pre>
