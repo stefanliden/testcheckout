@@ -42,9 +42,11 @@
                     <div class="card-content" [hidden]="!pickupDataBool">
                         <div class="content">
                             <button (click)="addPickupWindows()" type="button" class="button is-success button is-small"><span
-                                    class="icon-plus"></span> Add</button>
-                            <form [formGroup]="pickupWindowsForm" class="form-horizontal">
-                                <fieldset>
+                                    class="icon-plus"></span> Add Date</button>
+                                    <hr class="solid">
+
+                            <form  [hidden]="!pickUpWindowBool" [formGroup]="pickupWindowsForm" class="form-horizontal">
+                                <fieldset >
                                     <div formArrayName="products"
                                         *ngFor="let time of pickupWindowsForm.controls.products?.value; let i = index; trackBy:trackByFn">
                                         <div [formGroupName]="i">
@@ -68,15 +70,22 @@
                                                         formControlName="end" class="input is-small" />
                                                 </div>
                                             </div>
-                                        </div>
-                                        <button (click)="RemovePickupWindows(i)" type="button" id="removeBtn"
-                                            class="button is-danger  button is-small"><span
-                                                class="icon-close"></span>Remove</button>
-                                    </div>
 
-                                    <br />
+                                            <hr class="solid">
+
+                                        </div>
+                                      
+                                    </div>
+                                  
                                 </fieldset>
                             </form>
+                            <div  [hidden]="!removePickupBool">
+                                <button (click)="RemovePickupWindows()" type="button" id="removeBtn"
+                                class="button is-danger  button is-small"><span
+                                    class="icon-close"></span>Remove Date</button>
+                            </div>
+                         
+                            <br />
                         </div>
                     </div>
                 </div>
@@ -105,14 +114,14 @@
                                     <div class="form-group row">
                                         <label class="labelMedium" for="idCred">streetName</label>
                                         <div class="col-md-6">
-                                            <input class="input is-small" id="streetName" formControlName="streetName"
+                                            <input class="input is-small" id="originstreetName" formControlName="streetName"
                                                 name="streetName" type="text" placeholder="" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="labelMedium" for="idCred">streetNumber</label>
                                         <div class="col-md-6">
-                                            <input class="input is-small" id="streetNumber"
+                                            <input class="input is-small" id="originstreetNumber"
                                                 formControlName="streetNumber" name="streetNumber" (keypress)="numberOnly($event)" type="text"
                                                 placeholder="" />
                                         </div>
@@ -120,14 +129,14 @@
                                     <div class="form-group row">
                                         <label class="labelMedium" for="idCred">postalCode</label>
                                         <div class="col-md-6">
-                                            <input class="input is-small" id="postalCode" (keypress)="numberOnly($event)" formControlName="postalCode"
+                                            <input class="input is-small" id="originPostalCode" (keypress)="numberOnly($event)" formControlName="postalCode"
                                                 name="postalCode" type="text" placeholder="" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="labelMedium" for="idCred">city</label>
                                         <div class="col-md-6">
-                                            <input class="input is-small" id="cit1y" formControlName="city" name="city"
+                                            <input class="input is-small" id="originCity" formControlName="city" name="city"
                                                 type="text" placeholder="" />
                                         </div>
                                     </div>
@@ -237,7 +246,7 @@
                                     <div class="form-group row">
                                         <label class="labelMedium" for="idCred">name</label>
                                         <div class="col-md-6">
-                                            <input class="input is-small" id="name" formControlName="name"
+                                            <input class="input is-small" id="recipientname" formControlName="name"
                                                 name="name" type="text" placeholder="" />
                                         </div>
                                     </div>
@@ -245,14 +254,14 @@
                                     <div class="form-group row">
                                         <label class="labelMedium" for="idCred">email</label>
                                         <div class="col-md-6">
-                                            <input class="input is-small" id="email" formControlName="email"
+                                            <input class="input is-small" id="recipientemail" formControlName="email"
                                                 name="email" type="email" placeholder="" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="labelMedium" for="idCred">phoneCountryCode</label>
                                         <div class="col-md-6">
-                                            <input class="input is-small" id="phoneCountryCode"
+                                            <input class="input is-small" id="recipientphoneCountryCode"
                                                 formControlName="phoneCountryCode" name="phoneCountryCode" type="text"
                                                 placeholder="" />
                                         </div>
@@ -260,7 +269,7 @@
                                     <div class="form-group row">
                                         <label class="labelMedium" for="idCred">phoneNumber</label>
                                         <div class="col-md-6">
-                                            <input class="input is-small" id="phoneNumber" formControlName="phoneNumber"
+                                            <input class="input is-small" id="recipientphoneNumber" formControlName="phoneNumber"
                                                 name="phoneNumber" type="text" placeholder="" />
                                         </div>
                                     </div>
@@ -371,6 +380,8 @@
                         <div class="content">
                             <button (click)="addParcel()" type="button" class="button is-success button is-small"><span
                                     class="icon-plus"></span> Add Parcel</button>
+                                    <hr class="solid">
+
                             <form [formGroup]="parcelForm" class="form-horizontal">
                                 <fieldset>
                                     <div formArrayName="products"
@@ -435,12 +446,18 @@
                                             </div>
                                         </div>
 
-                                        
-                                        <button (click)="removeParcel(i)" type="button" id="removeBtn"
-                                            class="button is-danger  button is-small"><span
-                                                class="icon-close"></span>Remove Parcel</button>
+                                        <hr class="solid">
+
+                                   
                                     </div>
 
+                                    <div  [hidden]="!removeParcelBool">
+                                        <button (click)="removeParcel(i)" type="button" id="removeParcelBtn"
+                                        class="button is-danger  button is-small"><span
+                                            class="icon-close"></span>Remove Parcel</button>     
+                                    </div>
+                                    
+                                  
                                     <br />
                                 </fieldset>
                             </form>
@@ -469,6 +486,8 @@
                         <div class="content">
                             <button (click)="addItems()" type="button"
                                 class="button is-success button is-small"><span class="icon-plus"></span> Add Item</button>
+                                <hr class="solid">
+
                             <form [formGroup]="itemsForm" class="form-horizontal">
                                 <fieldset>
                                     <div formArrayName="products"
@@ -614,17 +633,24 @@
                                                 </div>
                                             </div>
 
+                                            <hr class="solid">
 
 
                                         </div>
-                                        <button (click)="removeItems(i)" type="button" id="removeBtn"
-                                            class="button is-danger  button is-small"><span
-                                                class="icon-close"></span>Remove Item</button>
+                                    
                                     </div>
 
                                     <br />
                                 </fieldset>
                             </form>
+                            
+                            <div  [hidden]="!removeItemBool">
+                                <button (click)="removeItems(i)" type="button" id="removeItemBtn"
+                                class="button is-danger  button is-small"><span
+                                    class="icon-close"></span>Remove Item</button>
+
+                            </div>
+
                         </div>
                     </div>
                 </div>

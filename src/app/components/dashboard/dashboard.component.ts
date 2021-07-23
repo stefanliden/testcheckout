@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
   titlePB = "Create Checkout"
   debugTitle = "Show Debug";
   expandTitle = 'Expand All';
-  
+
   parcelDataBool = false;
   itemsDataBool = false;
   pickupDataBool = false;
@@ -36,6 +36,10 @@ export class DashboardComponent implements OnInit {
   showTrackingLink = false;
   httpErrorBool = false;
   selectedBool = false;
+  pickUpWindowBool = false;
+  removePickupBool = false;
+  removeParcelBool = false;
+  removeItemBool = false;
 
   orderID: any;
   deliveryWindow: any;
@@ -44,10 +48,12 @@ export class DashboardComponent implements OnInit {
   checkoutNumber: any;
   saveData: any;
   orderData: any;
-  orderDataRequest:any;
+  orderDataRequest: any;
 
   urlSafe: SafeResourceUrl;
+
   checkoutObj: {};
+
   originInfoForm: FormGroup;
   originAddress: FormGroup;
   apiKeyForm: FormGroup;
@@ -59,10 +65,10 @@ export class DashboardComponent implements OnInit {
   parcels: FormGroup;
   recipient: FormGroup;
   pickupWindows: FormGroup;
-  fromTimeAdd = 1;
-  toTimeAdd = 1;
-  toTime = moment().add(this.fromTimeAdd,'day').set('hours',23).set('minute',23).set('second',23).format();
-  fromTime = moment().add(this.fromTimeAdd,'day').set('hours',0).set('minute',0).set('second',0).format();
+  fromTimeAdd = 0;
+  toTimeAdd = 0;
+  toTime = moment().add(this.fromTimeAdd, 'day').set('hours', 18).set('minute', 0).set('second', 0).format();
+  fromTime = moment().add(this.fromTimeAdd, 'day').set('hours', 0).set('minute', 0).set('second', 0).format();
 
   constructor(private toastr: ToastrService, private sanitizer: DomSanitizer, private http: HttpClient, private formBuilder: FormBuilder, public router: Router,
   ) { }
@@ -73,7 +79,7 @@ export class DashboardComponent implements OnInit {
     { id: "false" },
 
   ];
- 
+
 
   avabilityReqest() {
     this.orderDataRequest = {};
@@ -82,10 +88,13 @@ export class DashboardComponent implements OnInit {
     this.showTrackingLink = false;
     this.titlePB = "Update Checkout"
     this.httpErrorBool = true;
+    let pickupWindows = [];
     let originAddress = JSON.parse(JSON.stringify(this.originAddress.value));
     let recipientAdress = JSON.parse(JSON.stringify(this.recipient.value));
     let destinationAddress = JSON.parse(JSON.stringify(this.destinationAddress.value));
-    let pickupWindows = JSON.parse(JSON.stringify(this.pickupWindowsForm.value.products));
+    if (this.pickUpWindowBool == true) {
+      pickupWindows = JSON.parse(JSON.stringify(this.pickupWindowsForm.value.products));
+    }
     let parcels = JSON.parse(JSON.stringify(this.parcelForm.value.products));
     let publicToken = JSON.parse(JSON.stringify(this.apiKeyForm.value.publicToken));
     let items = JSON.parse(JSON.stringify(this.itemsForm.value.products));
@@ -126,54 +135,62 @@ export class DashboardComponent implements OnInit {
 
     this.http.post("https://corsporter.herokuapp.com/https://api.porterbuddy-test.com/availability", dataCheckoutToJson, { headers: headers }
     ).subscribe(
-        data => {
-          this.saveData = data;
-          this.checkoutObj = dataCheckout;
-  this.toastr.success('Checkout Updated', 'PorterBuddy', {
-  timeOut: 1000,
-});
-          (window as any).porterbuddy = {
-            token: publicToken,
-            view: "checkout",
-            availabilityResponse: data,
-            initialSelectedWindow: (data as any).deliveryWindows[0],
+      data => {
+        var totalWindows = (data as any).deliveryWindows;
+        this.saveData = data;
+        this.checkoutObj = dataCheckout;
+        this.toastr.success('Checkout Updated', 'PorterBuddy', {
+          timeOut: 1000,
+        });
+        (window as any).porterbuddy = {
+          token: publicToken,
+          view: "checkout",
+          availabilityResponse: data,
+          initialSelectedWindow: (data as any).deliveryWindows[0],
 
-            onSetCallbacks: function (callbacks) {
-              (window as any).forceRefreshReference = callbacks.forceRefresh;
-              (window as any).unselectDeliveryWindow = callbacks.unselectDeliveryWindow;
-              (window as any).setSelectedDeliveryWindow = callbacks.setSelectedDeliveryWindow;
-            },
+          onSetCallbacks: function (callbacks) {
+            (window as any).forceRefreshReference = callbacks.forceRefresh;
+            (window as any).unselectDeliveryWindow = callbacks.unselectDeliveryWindow;
+            (window as any).setSelectedDeliveryWindow = callbacks.setSelectedDeliveryWindow;
+          },
 
-            onUpdateDeliveryWindows: (callback, additionalInfo) => {
-              (window as any).forceRefreshReference();
+          onUpdateDeliveryWindows: (callback, additionalInfo) => {
+            (window as any).forceRefreshReference();
 
-              callback(this.saveData.deliveryWindows)
-            },
+            callback(this.saveData.deliveryWindows)
+          },
 
-            onSelectDeliveryWindow: (deliveryWindow) => {
-              this.selectedBool = true;
-              this.deliveryWindow = deliveryWindow;
-            }
+          onSelectDeliveryWindow: (deliveryWindow) => {
+            this.selectedBool = true;
+            this.deliveryWindow = deliveryWindow;
           }
+        }
 
-          this.httpErrorBool = true;
-          this.showErrorDataBool = false;
-          if (this.forceRefresTrue > 1) {
-            this.forceRefreshReference();
-          }
-          this.forceRefresTrue = 2;
+        this.httpErrorBool = true;
+        this.showErrorDataBool = false;
+        if (this.forceRefresTrue > 1) {
+          this.forceRefreshReference();
+        }
+        this.forceRefresTrue = 2;
 
-        },
-        error => {
-          this.toastr.error('Could not retrieve data', 'PorterBuddy', {
-            timeOut: 1000,
-          });
+        if (totalWindows.length < 1) {
           this.httpErrorBool = false;
           this.showErrorDataBool = true;
           this.showIframe = false;
-          this.errorData = error.error;
+          this.errorData = "No available PickupWindows were found"
         }
-      );
+
+      },
+      error => {
+        this.toastr.error('Could not retrieve data', 'PorterBuddy', {
+          timeOut: 1000,
+        });
+        this.httpErrorBool = false;
+        this.showErrorDataBool = true;
+        this.showIframe = false;
+        this.errorData = error.error;
+      }
+    );
   }
 
   createOrder() {
@@ -184,8 +201,8 @@ export class DashboardComponent implements OnInit {
     let parcels = JSON.parse(JSON.stringify(this.parcelForm.value.products));
     let apiKey = JSON.parse(JSON.stringify(this.apiKeyForm.value.apiKey));
     let items = JSON.parse(JSON.stringify(this.itemsForm.value.products));
-    let orginInfo= JSON.parse(JSON.stringify(this.originInfoForm.value ));
-    let verification= JSON.parse(JSON.stringify(this.verificationsForm.value ));
+    let orginInfo = JSON.parse(JSON.stringify(this.originInfoForm.value));
+    let verification = JSON.parse(JSON.stringify(this.verificationsForm.value));
 
     items.forEach(element => {
       element.price = {
@@ -200,35 +217,10 @@ export class DashboardComponent implements OnInit {
       delete element.barCodevalue;
       delete element.barCodetype;
     });
-    var orderInfo ={};
+    var orderInfo = {};
 
-    if(this.deliveryWindow.consolidated == false){
+    if (this.deliveryWindow.consolidated == false) {
 
-     orderInfo = {
-      "origin": {
-        "name": orginInfo.name,
-        "address": originAddress,
-        "email": orginInfo.email,
-        "phoneNumber": orginInfo.phoneNumber,
-        "phoneCountryCode": orginInfo.phoneCountryCode,
-      },
-      "destination": {
-        "name": recipientAdress.name,
-        "address": destinationAddress,
-        "email": recipientAdress.email,
-        "phoneCountryCode": recipientAdress.phoneCountryCode,
-        "phoneNumber": recipientAdress.phoneNumber,
-
-        "deliveryWindow": this.deliveryWindow,
-        "verifications": verification
-      },
-      "parcels": parcels,
-      "items": items,
-      "product": "delivery",
-      "courierInstructions": "Test",
-    }
-   
-    }else{
       orderInfo = {
         "origin": {
           "name": orginInfo.name,
@@ -243,9 +235,34 @@ export class DashboardComponent implements OnInit {
           "email": recipientAdress.email,
           "phoneCountryCode": recipientAdress.phoneCountryCode,
           "phoneNumber": recipientAdress.phoneNumber,
-  
+
+          "deliveryWindow": this.deliveryWindow,
+          "verifications": verification
+        },
+        "parcels": parcels,
+        "items": items,
+        "product": "delivery",
+        "courierInstructions": "Test",
+      }
+
+    } else {
+      orderInfo = {
+        "origin": {
+          "name": orginInfo.name,
+          "address": originAddress,
+          "email": orginInfo.email,
+          "phoneNumber": orginInfo.phoneNumber,
+          "phoneCountryCode": orginInfo.phoneCountryCode,
+        },
+        "destination": {
+          "name": recipientAdress.name,
+          "address": destinationAddress,
+          "email": recipientAdress.email,
+          "phoneCountryCode": recipientAdress.phoneCountryCode,
+          "phoneNumber": recipientAdress.phoneNumber,
+
           "consolidatedWindow": {
-            "token" :this.deliveryWindow.token
+            "token": this.deliveryWindow.token
           },
           "verifications": verification
         },
@@ -270,12 +287,11 @@ export class DashboardComponent implements OnInit {
     )
       .subscribe(
         data => {
-       
           this.orderData = data;
           this.showTrackingLink = true;
           this.selectedBool = false;
           this.orderID = (data as any).orderId
-          this.toastr.success('PorterBuddy Order' + ' ' + this.orderID  +' ' + 'created', 'PorterBuddy', {
+          this.toastr.success('PorterBuddy Order' + ' ' + this.orderID + ' ' + 'created', 'PorterBuddy', {
             timeOut: 2000,
           });
           this.showIframe = false;
@@ -341,6 +357,7 @@ export class DashboardComponent implements OnInit {
     else {
       this.expandAllBool = false;
       this.verDataBool = false;
+      this.itemsDataBool = false;
       this.parcelDataBool = false;
       this.parcelDataBool = false;
       this.pickupDataBool = false;
@@ -352,7 +369,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
- 
+
   public parcelDataShow(event) {
     if (this.parcelDataBool == false) { this.parcelDataBool = true; } else { this.parcelDataBool = false; }
   }
@@ -436,7 +453,7 @@ export class DashboardComponent implements OnInit {
       email: ['testemail+recipient@porterbuddy.com', Validators.required],
       phoneCountryCode: ['+47', Validators.required],
       phoneNumber: ['65127865', Validators.required],
-    
+
 
     });
 
@@ -476,14 +493,14 @@ export class DashboardComponent implements OnInit {
 
     this.pickupWindowsForm = this.formBuilder.group({
       products: this.formBuilder.array([
-        this.initDate()
+        this.initPickupWindows()
       ])
     });
 
     this.avabilityReqest();
   }
 
-  public changedExtraHandler(events) {}
+  public changedExtraHandler(events) { }
 
   initParcel() {
     var randomINT = Math.random();
@@ -494,7 +511,7 @@ export class DashboardComponent implements OnInit {
       weightGrams: this.formBuilder.control('2000', Validators.required),
       depthCm: this.formBuilder.control('45', Validators.required),
       parcelShipmentIdentifier: [randomINT.toString(), Validators.required],
-      description:  ["Shoes", Validators.required],
+      description: ["Shoes", Validators.required],
     });
   }
 
@@ -520,55 +537,72 @@ export class DashboardComponent implements OnInit {
 
   x = 14;
 
-  initDate() {
+  initPickupWindows() {
     this.x = this.x + 1;
     return this.formBuilder.group({
       start: this.formBuilder.control(this.fromTime, Validators.required),
       end: this.formBuilder.control(this.toTime, Validators.required),
 
     });
-    
+
   }
 
   addParcel() {
     const control = <FormArray>this.parcelForm.controls['products'];
     control.push(this.initParcel());
+    this.removeParcelBool = true;
+
   }
 
   removeParcel(i: number) {
+    i = this.parcelForm.value.products.length -1;
     const control = <FormArray>this.parcelForm.controls['products'];
     control.removeAt(i);
+    if(this.parcelForm.value.products.length == 0){
+      this.removeParcelBool = false;
+    }
   }
 
   addItems() {
     const control = <FormArray>this.itemsForm.controls['products'];
     control.push(this.initItems());
+    this.removeItemBool = true;
+
+    
   }
 
   removeItems(i: number) {
+    i = this.itemsForm.value.products.length -1;
     const control = <FormArray>this.itemsForm.controls['products'];
     control.removeAt(i);
+    if(this.itemsForm.value.products.length == 0){
+      this.removeItemBool = false;
+    }
   }
 
   addPickupWindows() {
+    this.pickUpWindowBool = true;
     this.fromTimeAdd++;
     this.toTimeAdd++;
-    this.toTime = moment().add(this.toTimeAdd,'day').set('hours',23).set('minute',23).set('second',23).format();
-    this.fromTime = moment().add(this.fromTimeAdd,'day').set('hours',0).set('minute',0).set('second',0).format();
+    this.fromTime = moment().add(this.fromTimeAdd, 'day').set('hours', 0).set('minute', 0).set('second', 0).format();
+    this.toTime = moment().add(this.toTimeAdd, 'day').set('hours', 18).set('minute', 0).set('second', 0).format();
     const control = <FormArray>this.pickupWindowsForm.controls['products'];
-    control.push(this.initDate());
+    control.push(this.initPickupWindows());
+    this.removePickupBool = true;
+
   }
 
   RemovePickupWindows(i: number) {
     this.fromTimeAdd--;
     this.toTimeAdd--;
-
-    // remove address from the list
+    i = this.pickupWindowsForm.value.products.length -1;
     const control = <FormArray>this.pickupWindowsForm.controls['products'];
     control.removeAt(i);
-
+    if(this.pickupWindowsForm.value.products.length == 0){
+      this.removePickupBool = false;
+    }
   }
-  
+
   trackByFn(index: number, item: any) {
     return item.trackingId;
   }
