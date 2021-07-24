@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class DashboardComponent implements OnInit {
 
   title = 'checkout';
-  titlePB = "Create Checkout"
+  titlePB = "Create Checkout";
   debugTitle = "Show Debug";
   expandTitle = 'Expand All';
 
@@ -38,8 +38,8 @@ export class DashboardComponent implements OnInit {
   selectedBool = false;
   pickUpWindowBool = false;
   removePickupBool = false;
-  removeParcelBool = false;
-  removeItemBool = false;
+  removeParcelBool = true;
+  removeItemBool = true;
 
   orderID: any;
   deliveryWindow: any;
@@ -54,6 +54,12 @@ export class DashboardComponent implements OnInit {
 
   checkoutObj: {};
 
+  verificationBool = [
+    { id: "true" },
+    { id: "false" },
+
+  ];
+
   originInfoForm: FormGroup;
   originAddress: FormGroup;
   apiKeyForm: FormGroup;
@@ -65,21 +71,16 @@ export class DashboardComponent implements OnInit {
   parcels: FormGroup;
   recipient: FormGroup;
   pickupWindows: FormGroup;
+
   fromTimeAdd = 0;
   toTimeAdd = 0;
   toTime = moment().add(this.fromTimeAdd, 'day').set('hours', 18).set('minute', 0).set('second', 0).format();
   fromTime = moment().add(this.fromTimeAdd, 'day').set('hours', 0).set('minute', 0).set('second', 0).format();
 
+ 
+
   constructor(private toastr: ToastrService, private sanitizer: DomSanitizer, private http: HttpClient, private formBuilder: FormBuilder, public router: Router,
   ) { }
-
-
-  verificationBool = [
-    { id: "true" },
-    { id: "false" },
-
-  ];
-
 
   avabilityReqest() {
     this.orderDataRequest = {};
@@ -323,7 +324,6 @@ export class DashboardComponent implements OnInit {
         },
         error => {
           this.statusData = error.error;
-
         }
       );
   }
@@ -368,7 +368,6 @@ export class DashboardComponent implements OnInit {
       this.expandTitle = 'Expand All';
     }
   }
-
 
   public parcelDataShow(event) {
     if (this.parcelDataBool == false) { this.parcelDataBool = true; } else { this.parcelDataBool = false; }
@@ -416,7 +415,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
-    var randomINT = Math.random();
+    var randomIdentifier = Math.random();
 
     this.pickupWindows = this.formBuilder.group({
       start: ["2021-11-13T10:00+01:00", Validators.required],
@@ -428,8 +427,7 @@ export class DashboardComponent implements OnInit {
       heightCm: ['25', Validators.required],
       depthCm: ['45', Validators.required],
       weightGrams: ['2000 ', Validators.required],
-      parcelShipmentIdentifier: [randomINT.toString(), Validators.required],
-
+      parcelShipmentIdentifier: [randomIdentifier.toString(), Validators.required],
     });
 
     this.recipient = this.formBuilder.group({
@@ -437,7 +435,6 @@ export class DashboardComponent implements OnInit {
       email: ['testemail+recipient@porterbuddy.com', Validators.required],
       phoneCountryCode: ['+47', Validators.required],
       phoneNumber: ['65127865', Validators.required],
-
     });
 
     this.originAddress = this.formBuilder.group({
@@ -453,14 +450,11 @@ export class DashboardComponent implements OnInit {
       email: ['testemail+recipient@porterbuddy.com', Validators.required],
       phoneCountryCode: ['+47', Validators.required],
       phoneNumber: ['65127865', Validators.required],
-
-
     });
 
     this.apiKeyForm = this.formBuilder.group({
       apiKey: ['yOxaPhpechYuey1mi16JZNI4p4laved0LKuOw8KS', Validators.required],
       publicToken: ['PeVR7JvLZSKcbQWolrQvKj3vdxEE1B6kRTixeTjM', Validators.required],
-
     });
 
     this.destinationAddress = this.formBuilder.group({
@@ -535,14 +529,11 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  x = 14;
 
   initPickupWindows() {
-    this.x = this.x + 1;
     return this.formBuilder.group({
       start: this.formBuilder.control(this.fromTime, Validators.required),
       end: this.formBuilder.control(this.toTime, Validators.required),
-
     });
 
   }
@@ -551,7 +542,6 @@ export class DashboardComponent implements OnInit {
     const control = <FormArray>this.parcelForm.controls['products'];
     control.push(this.initParcel());
     this.removeParcelBool = true;
-
   }
 
   removeParcel(i: number) {
@@ -567,8 +557,6 @@ export class DashboardComponent implements OnInit {
     const control = <FormArray>this.itemsForm.controls['products'];
     control.push(this.initItems());
     this.removeItemBool = true;
-
-    
   }
 
   removeItems(i: number) {
@@ -589,7 +577,6 @@ export class DashboardComponent implements OnInit {
     const control = <FormArray>this.pickupWindowsForm.controls['products'];
     control.push(this.initPickupWindows());
     this.removePickupBool = true;
-
   }
 
   RemovePickupWindows(i: number) {

@@ -6,6 +6,7 @@
                     <div class="form-group row">
 
                         <h3 class="subtitle is-6">API Settings</h3>
+                        
 
                         <div class="columns">
                             <div class="column"></div>
@@ -80,7 +81,7 @@
                                 </fieldset>
                             </form>
                             <div  [hidden]="!removePickupBool">
-                                <button (click)="RemovePickupWindows()" type="button" id="removeBtn"
+                                <button (click)="RemovePickupWindows(0)" type="button" id="removeBtn"
                                 class="button is-danger  button is-small"><span
                                     class="icon-close"></span>Remove Date</button>
                             </div>
@@ -452,7 +453,7 @@
                                     </div>
 
                                     <div  [hidden]="!removeParcelBool">
-                                        <button (click)="removeParcel(i)" type="button" id="removeParcelBtn"
+                                        <button (click)="removeParcel(0)" type="button" id="removeParcelBtn"
                                         class="button is-danger  button is-small"><span
                                             class="icon-close"></span>Remove Parcel</button>     
                                     </div>
@@ -645,7 +646,7 @@
                             </form>
                             
                             <div  [hidden]="!removeItemBool">
-                                <button (click)="removeItems(i)" type="button" id="removeItemBtn"
+                                <button (click)="removeItems(0)" type="button" id="removeItemBtn"
                                 class="button is-danger  button is-small"><span
                                     class="icon-close"></span>Remove Item</button>
 
@@ -696,6 +697,10 @@
                                 </fieldset>
                             </form>
                         </div>
+                        <div class="notification is-info is-light">
+                            <button class="delete"></button>
+                            To find your test api keys log in at <a href ="https://retailers.porterbuddy-test.com" target="_blank">https://retailers.porterbuddy-test.com</a> and navigate to Profile > API
+                        </div>
                     </div>
                 </div>
 
@@ -705,17 +710,10 @@
         <div class="column is-7">
             <div class="card">
                 <div class="column is-3">
-
-
-
                     <button (click)="avabilityReqest()" style="background:#661aff" class="button is-info"> {{titlePB}}
-
                         <span style="margin-right: 2%;" style="color: white !important;margin-left: 2%;" class="icon"><i
                                 style="color: white !important;margin-left: 2%;" class="far fa-clock   "></i></span>
-
-
                     </button>
-
 
                 </div>
                 <div class="loader-box" [hidden]="!showSpinner" style="display: center;">
@@ -731,10 +729,7 @@
                             <span style="margin-right: 2%;" style="color: white !important;margin-left: 2%;"
                                 class="icon"><i style="color: white !important;margin-left: 2%;"
                                     class="fas fa-dolly"></i></span>
-
-
                         </button>
-
                     </div>
                     <pre [hidden]="!showErrorDataBool">{{errorData | json:4}}</pre>
                 </div>
@@ -745,21 +740,17 @@
                                 class="fas fa-search"></i></span> {{debugTitle}}
                     </button>
                 </div>
+
                 <div class="column is-12">
-
-                    <h2 [hidden]="!showTrackingLink" class="subtitle is-6">Order Created: OrderID {{orderID}}</h2>
-
+                    <h1 [hidden]="!showTrackingLink">Created PorterBuddy Order {{orderID}}  <svg xmlns="http://www.w3.org/2000/svg" width="68.285" height="61.062" viewBox="0 0 68.285 61.062" class="pb-confetti-icon"><g id="Group_450" data-name="Group 450" transform="translate(-286.052 -302.86)"><path id="Path_2479" data-name="Path 2479" d="M405.871,329.145a1.714,1.714,0,0,0,2.273-.845c6.428-14.042.159-24.218-.111-24.644a1.715,1.715,0,0,0-2.9,1.829c.228.366,5.517,9.1-.107,21.387A1.715,1.715,0,0,0,405.871,329.145Z" transform="translate(-84.861)" fill="#f50"></path><path id="Path_2480" data-name="Path 2480" d="M355.09,349.06a1.715,1.715,0,0,0,3.429,0,9.933,9.933,0,0,0-3.16-6.923,1.715,1.715,0,0,0-2.266,2.574A6.514,6.514,0,0,1,355.09,349.06Z" transform="translate(-47.474 -27.75)" fill="#661aff"></path><path id="Path_2481" data-name="Path 2481" d="M433.689,439.693a1.715,1.715,0,0,0-.141,3.427c.84.037,3.442.41,4.346,1.585a1.715,1.715,0,1,0,2.718-2.091C438.572,439.963,434.183,439.713,433.689,439.693Z" transform="translate(-104.172 -97.727)" fill="#8446ff"></path><circle id="Ellipse_222" data-name="Ellipse 222" cx="1.448" cy="1.448" r="1.448" transform="translate(299.639 312.861) rotate(-45)" fill="#ffca33"></circle><circle id="Ellipse_223" data-name="Ellipse 223" cx="1.448" cy="1.448" r="1.448" transform="translate(314.429 314.318) rotate(-9.217)" fill="#661aff"></circle><circle id="Ellipse_224" data-name="Ellipse 224" cx="1.448" cy="1.448" r="1.448" transform="translate(330.196 309.423) rotate(-13.283)" fill="#108000"></circle><circle id="Ellipse_225" data-name="Ellipse 225" cx="1.448" cy="1.448" r="1.448" transform="translate(338.661 324.098) rotate(-45)" fill="#f50"></circle><circle id="Ellipse_226" data-name="Ellipse 226" cx="1.448" cy="1.448" r="1.448" transform="translate(328.829 325.878) rotate(-9.217)" fill="#661aff"></circle><circle id="Ellipse_227" data-name="Ellipse 227" cx="1.448" cy="1.448" r="1.448" transform="translate(337.169 352.744)" fill="#ffca33"></circle><circle id="Ellipse_228" data-name="Ellipse 228" cx="1.448" cy="1.448" r="1.448" transform="translate(349.33 342.336) rotate(-13.283)" fill="#7e73ff"></circle><path id="Path_2482" data-name="Path 2482" d="M353.573,382.907a23.084,23.084,0,0,0-9.917-3.1c-5.124-.5-13,.221-22.249,6.1a54.743,54.743,0,0,0-4.239-4.752c-7.256-7.256-15.11-11.292-18.1-9.428a1.711,1.711,0,0,0-.923,1.037l-.043.135a3.067,3.067,0,0,0-.129.406L286.133,410.55a1.715,1.715,0,0,0,2.179,2.146L324.9,400.443a1.715,1.715,0,0,0,.351-.166,2.514,2.514,0,0,0,1.022-.6c1.744-1.744.483-6.05-2.836-11,6.67-4.207,13.282-6.049,19.693-5.472a20.246,20.246,0,0,1,8.55,2.559,1.715,1.715,0,0,0,1.9-2.857Zm-54.047-3.159a50.116,50.116,0,0,0,19.223,19.138l-28.326,9.486Z" transform="translate(0 -48.862)" fill="#661aff"></path></g></svg></h1>
+                    <h2 [hidden]="!showTrackingLink">Fetched information Order {{orderID}} </h2>
+                    <pre [hidden]="!showTrackingLink">{{statusData | json:2}}</pre>
+                    <h2 [hidden]="!showTrackingLink">Tracking link OrderID {{orderID}} </h2>
                     <iframe [hidden]="!showTrackingLink" [src]="urlSafe "
                         style="display: center; width:100%; height: 1200px;" frameborder="0" allowfullscreen></iframe>
-
                 </div>
-                <h1 [hidden]="!showTrackingLink">Fetched information OrderID {{orderID}} </h1>
-                <pre [hidden]="!showTrackingLink">{{statusData | json:2}}</pre>
-
-            
             </div>
         </div>
-
         
         <div  class="column is-12" >
             <h3 [hidden]="!debugBool">Avability Request</h3>
