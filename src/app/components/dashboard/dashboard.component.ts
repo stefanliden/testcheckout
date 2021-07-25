@@ -5,6 +5,7 @@ import { FormBuilder, FormControl, FormArray, FormGroup, Validators } from '@ang
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -40,6 +41,7 @@ export class DashboardComponent implements OnInit {
   removePickupBool = false;
   removeParcelBool = true;
   removeItemBool = true;
+  otherDataBool = false;
 
   orderID: any;
   deliveryWindow: any;
@@ -63,6 +65,7 @@ export class DashboardComponent implements OnInit {
   originInfoForm: FormGroup;
   originAddress: FormGroup;
   apiKeyForm: FormGroup;
+  otherDataForm: FormGroup;
   destinationAddress: FormGroup;
   parcelForm: FormGroup;
   itemsForm: FormGroup;
@@ -204,6 +207,8 @@ export class DashboardComponent implements OnInit {
     let items = JSON.parse(JSON.stringify(this.itemsForm.value.products));
     let orginInfo = JSON.parse(JSON.stringify(this.originInfoForm.value));
     let verification = JSON.parse(JSON.stringify(this.verificationsForm.value));
+    let other = JSON.parse(JSON.stringify(this.otherDataForm.value));
+
 
     items.forEach(element => {
       element.price = {
@@ -242,8 +247,10 @@ export class DashboardComponent implements OnInit {
         },
         "parcels": parcels,
         "items": items,
-        "product": "delivery",
-        "courierInstructions": "Test",
+        "product": other.product,
+        "courierInstructions": other.courierInstructions,
+        "orderReference": other.orderReference,
+        "statusWebhookUrl": other.statusWebhookUrl
       }
 
     } else {
@@ -269,8 +276,10 @@ export class DashboardComponent implements OnInit {
         },
         "parcels": parcels,
         "items": items,
-        "product": "delivery",
-        "courierInstructions": "Test",
+        "product": other.product,
+        "courierInstructions": other.courierInstructions,
+        "orderReference": other.orderReference,
+        "statusWebhookUrl": other.statusWebhookUrl
       }
 
     }
@@ -350,6 +359,7 @@ export class DashboardComponent implements OnInit {
       this.credDataBool = true;
       this.verDataBool = true;
       this.apiDataBool = true;
+      this.otherDataBool = true;
       this.destinationDataBool = true;
       this.recipientDataBool = true;
       this.expandTitle = 'Collapse All';
@@ -357,12 +367,14 @@ export class DashboardComponent implements OnInit {
     else {
       this.expandAllBool = false;
       this.verDataBool = false;
+      this.apiDataBool = false;
       this.itemsDataBool = false;
       this.parcelDataBool = false;
       this.parcelDataBool = false;
       this.pickupDataBool = false;
       this.credDataBool = false;
       this.apiDataBool = false;
+      this.otherDataBool = false;
       this.destinationDataBool = false;
       this.recipientDataBool = false;
       this.expandTitle = 'Expand All';
@@ -397,6 +409,10 @@ export class DashboardComponent implements OnInit {
 
   public destinationDataShow(event) {
     if (this.destinationDataBool == false) { this.destinationDataBool = true; } else { this.destinationDataBool = false; }
+  }
+
+  public othernDataShow(event) {
+    if (this.otherDataBool == false) { this.otherDataBool = true; } else { this.otherDataBool = false; }
   }
 
   numberOnly(event): boolean {
@@ -455,6 +471,14 @@ export class DashboardComponent implements OnInit {
     this.apiKeyForm = this.formBuilder.group({
       apiKey: ['yOxaPhpechYuey1mi16JZNI4p4laved0LKuOw8KS', Validators.required],
       publicToken: ['PeVR7JvLZSKcbQWolrQvKj3vdxEE1B6kRTixeTjM', Validators.required],
+    });
+
+    this.otherDataForm = this.formBuilder.group({
+      product: ['delivery', Validators.required],
+      courierInstructions: ['test', Validators.required],
+      orderReference: ['order-12345', Validators.required],
+      statusWebhookUrl: ['https://api.myshopbackend.com/statusUpdated', Validators.required],
+
     });
 
     this.destinationAddress = this.formBuilder.group({
