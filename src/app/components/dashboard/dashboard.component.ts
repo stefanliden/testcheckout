@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
 
   title = 'checkout';
   titlePB = "Create Checkout";
-  debugTitle = "Show Debug";
+  debugTitle = "Show HttpRequest";
   expandTitle = 'Expand All';
 
   parcelDataBool = false;
@@ -339,11 +339,11 @@ export class DashboardComponent implements OnInit {
 
   public showDebug() {
     if (this.debugBool == false) {
-      this.debugTitle = "Hide Debug"; this.debugBool = true; this.expandAllBool = true;
+      this.debugTitle = "Hide HttpRequest"; this.debugBool = true; this.expandAllBool = true;
       this.expandAll();
     }
     else {
-      this.debugTitle = "Show Debug";
+      this.debugTitle = "Show HttpRequest";
       this.debugBool = false;
       this.expandAllBool = true;
       this.expandAll();

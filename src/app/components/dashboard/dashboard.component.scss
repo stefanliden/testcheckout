@@ -11,8 +11,12 @@
 }
 hr{
     margin:0.5rem;
+    background: #9967ff;
 }
-
+.notification.is-info.is-light{
+    background-color: #f7f3ff;
+    color: #661aff;
+}
 .fa{
     float: right;
 }
@@ -29,6 +33,15 @@ hr{
 
 .pb-confetti-icon{
     margin-right: 2%;
+}
+
+.button.is-success{
+    background-color:#9967ff !important;
+}
+
+.button.is-danger{
+    background-color:#9967ff !important;
+
 }
 
 .select{

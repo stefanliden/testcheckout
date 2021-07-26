@@ -1,834 +1,623 @@
 <div class="container">
     <div class="columns is-desktop">
-        <div class="column is-4">
-            <div class="card">
-                <div class="card-header">
+      <div class="column is-4">
+        <div class="card">
+          <div class="card-header">
+            <div class="form-group row">
+              <h3 class="subtitle is-6">API Settings</h3>
+              <div class="columns">
+                <div class="column"></div>
+                <div class="column"></div>
+                <div class="column"></div>
+                <div class="column"></div>
+              </div>
+              <div class="col-lg-8">
+                <button style="background:#661aff" type="button" (click)="expandAll()" style="float: right;" class="button rectangleSecondary mediumLabel">
+                  <span [hidden]="expandAllBool" class="icon-angle-down"></span>
+                  <span [hidden]="!expandAllBool" class="icon-angle-up"></span>
+                  {{expandTitle}}
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title"> PickupWindows <span class="icon">
+                  <i class="icon-shopping-cart"></i>
+                </span>
+              </p>
+              <button class="button is-outlined" (click)="pickupWindowsDataShow ($event)" aria-label="more options">
+                <span class="icon">
+                  <i class="far fa-window-maximize"></i>
+                </span>
+              </button>
+            </header>
+            <div class="card-content" [hidden]="!pickupDataBool">
+              <div class="content">
+                <button (click)="addPickupWindows()" type="button" class="button is-success button is-small">
+                  <span class="icon-plus"></span> Add Date </button>
+                <hr class="solid">
+                <form [hidden]="!pickUpWindowBool" [formGroup]="pickupWindowsForm" class="form-horizontal">
+                  <fieldset>
+                    <div formArrayName="products" *ngFor="let time of pickupWindowsForm.controls.products?.value; let i = index; trackBy:trackByFn">
+                      <div [formGroupName]="i">
+                        <div class="form-group row">
+                          <label class="labelMedium" for="start">Start</label>
+                          <div class="col-md-6">
+                            <input placeholder="start" (ngModelChange)="changedExtraHandler($event)" type="text" formControlName="start" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="end">end</label>
+                          <div class="col-md-6">
+                            <input placeholder="end" (ngModelChange)="changedExtraHandler($event)" type="text" formControlName="end" class="input is-small" />
+                          </div>
+                        </div>
+                        <hr class="solid">
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+                <div [hidden]="!removePickupBool">
+                  <button (click)="RemovePickupWindows(0)" type="button" id="removeBtn" class="button is-danger  button is-small">
+                    <span class="icon-close"></span>Remove Date </button>
+                </div>
+                <br />
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title"> Origin <span class="icon">
+                  <i class="icofont icofont-credit-card"></i>
+                </span>
+              </p>
+              <button class="button is-outlined" (click)="orginDataShow ($event)" aria-label="more options">
+                <span class="icon">
+                  <i class="far fa-building"></i>
+                </span>
+              </button>
+            </header>
+            <div class="card-content" [hidden]="!credDataBool">
+              <div class="content">
+                <form [formGroup]="originAddress" class="form-horizontal">
+                  <fieldset>
                     <div class="form-group row">
-
-                        <h3 class="subtitle is-6">API Settings</h3>
-                        
-
-                        <div class="columns">
-                            <div class="column"></div>
-                            <div class="column"></div>
-                            <div class="column"></div>
-                            <div class="column"></div>
-                        </div>
-
-                        <div class="col-lg-8">
-                            <button style="background:#661aff" type="button" (click)="expandAll()" style="float: right;"
-                                class="button rectangleSecondary mediumLabel">
-                                <span [hidden]="expandAllBool" class="icon-angle-down"></span>
-                                <span [hidden]="!expandAllBool" class="icon-angle-up"></span>
-                                {{expandTitle}}
-                            </button>
-                        </div>
+                      <label class="labelMedium" for="idCred">streetName</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="originstreetName" formControlName="streetName" name="streetName" type="text" placeholder="" />
+                      </div>
                     </div>
-                </div>
-
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">
-                            PickupWindows
-                            <span class="icon">
-                                <i class="icon-shopping-cart"></i>
-                            </span>
-                        </p>
-                        <button class="button is-outlined" (click)="pickupWindowsDataShow ($event)" aria-label="more options">
-                            <span class="icon">
-                                <i class="far fa-window-maximize"></i>
-                            </span>
-                        </button>
-                    </header>
-                    <div class="card-content" [hidden]="!pickupDataBool">
-                        <div class="content">
-                            <button (click)="addPickupWindows()" type="button" class="button is-success button is-small"><span
-                                    class="icon-plus"></span> Add Date</button>
-                                    <hr class="solid">
-
-                            <form  [hidden]="!pickUpWindowBool" [formGroup]="pickupWindowsForm" class="form-horizontal">
-                                <fieldset >
-                                    <div formArrayName="products"
-                                        *ngFor="let time of pickupWindowsForm.controls.products?.value; let i = index; trackBy:trackByFn">
-                                        <div [formGroupName]="i">
-
-
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="start">Start</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="start"
-                                                        (ngModelChange)="changedExtraHandler($event)" type="text"
-                                                        formControlName="start" class="input is-small" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="end">end</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="end"
-                                                        (ngModelChange)="changedExtraHandler($event)" type="text"
-                                                        formControlName="end" class="input is-small" />
-                                                </div>
-                                            </div>
-
-                                            <hr class="solid">
-
-                                        </div>
-                                      
-                                    </div>
-                                  
-                                </fieldset>
-                            </form>
-                            <div  [hidden]="!removePickupBool">
-                                <button (click)="RemovePickupWindows(0)" type="button" id="removeBtn"
-                                class="button is-danger  button is-small"><span
-                                    class="icon-close"></span>Remove Date</button>
-                            </div>
-                         
-                            <br />
-                        </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">streetNumber</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="originstreetNumber" formControlName="streetNumber" name="streetNumber" (keypress)="numberOnly($event)" type="text" placeholder="" />
+                      </div>
                     </div>
-                </div>
-
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">
-                            Origin
-                            <span class="icon">
-                                <i class="icofont icofont-credit-card"></i>
-                            </span>
-                        </p>
-                        <button class="button is-outlined" (click)="orginDataShow ($event)" aria-label="more options">
-                            <span class="icon">
-                                <i class="far fa-building"></i>
-                            </span>
-                        </button>
-                    </header>
-
-
-
-                    <div class="card-content" [hidden]="!credDataBool">
-                        <div class="content">
-                            <form [formGroup]="originAddress" class="form-horizontal">
-                                <fieldset>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">streetName</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="originstreetName" formControlName="streetName"
-                                                name="streetName" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">streetNumber</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="originstreetNumber"
-                                                formControlName="streetNumber" name="streetNumber" (keypress)="numberOnly($event)" type="text"
-                                                placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">postalCode</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="originPostalCode" (keypress)="numberOnly($event)" formControlName="postalCode"
-                                                name="postalCode" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">city</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="originCity" formControlName="city" name="city"
-                                                type="text" placeholder="" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Form Name -->
-                                </fieldset>
-                            </form>
-
-                            <form [formGroup]="originInfoForm" class="form-horizontal">
-                                <fieldset>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">name</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="name" formControlName="name"
-                                                name="name" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="email">email</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="email"
-                                                formControlName="email" name="email" type="text"
-                                                placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="phoneCountryCode">phoneCountryCode</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="phoneCountryCode" formControlName="phoneCountryCode"
-                                                name="phoneCountryCode" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="phoneNumber">phoneNumber</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="phoneNumber" formControlName="phoneNumber" name="phoneNumber"
-                                                type="text" placeholder="" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Form Name -->
-                                </fieldset>
-                            </form>
-
-                        </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">postalCode</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="originPostalCode" (keypress)="numberOnly($event)" formControlName="postalCode" name="postalCode" type="text" placeholder="" />
+                      </div>
                     </div>
-                </div>
-
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">
-                            Destination
-                            <span class="icon">
-                                <i class="icofont icofont-credit-card"></i>
-                            </span>
-                        </p>
-
-                        <button class="button is-outlined" (click)="destinationDataShow ($event)" aria-label="more options">
-                            <span class="icon">
-                                <i class="fas fa-dolly"></i>
-                            </span>
-                        </button>
-                    </header>
-
-
-                    <div class="card-content" [hidden]="!destinationDataBool">
-                        <div class="content">
-                            <form [formGroup]="destinationAddress" class="form-horizontal">
-                                <fieldset>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">streetName</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small"  id="streetNa3me" formControlName="streetName"
-                                                name="streetName" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="labelMedium"  for="idCred">streetNumber</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" (keypress)="numberOnly($event)" id="streetNumber"
-                                                formControlName="streetNumber" name="streetNumber" type="text"
-                                                placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">postalCode</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" (keypress)="numberOnly($event)" id="postalCoded" formControlName="postalCode"
-                                                name="postalCode" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">city</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="city" formControlName="city" name="city"
-                                                type="text" placeholder="" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Form Name -->
-                                </fieldset>
-                            </form>
-                            <form [formGroup]="recipient" class="form-horizontal">
-                                <fieldset>
-
-
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">name</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="recipientname" formControlName="name"
-                                                name="name" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">email</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="recipientemail" formControlName="email"
-                                                name="email" type="email" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">phoneCountryCode</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="recipientphoneCountryCode"
-                                                formControlName="phoneCountryCode" name="phoneCountryCode" type="text"
-                                                placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">phoneNumber</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="recipientphoneNumber" formControlName="phoneNumber"
-                                                name="phoneNumber" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Form Name -->
-                                </fieldset>
-                            </form>
-                        </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">city</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="originCity" formControlName="city" name="city" type="text" placeholder="" />
+                      </div>
                     </div>
-                </div>
-
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">
-                            Verification
-                            <span class="icon">
-                                <i class="icofont icofont-credit-card"></i>
-                            </span>
-                        </p>
-                        <button class="button is-outlined" (click)="verificationDataShow ($event)" aria-label="more options">
-                            <span class="icon">
-                                <i class="fas fa-address-card"></i>
-                            </span>
-                        </button>
-                    </header>
-
-
-
-                    <div class="card-content" [hidden]="!verDataBool">
-                        <div class="content">
-                      
-                            <form [formGroup]="verificationsForm" class="form-horizontal">
-                                <fieldset>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">minimumAgeCheck</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" (keypress)="numberOnly($event)" id="minimumAgeCheck" formControlName="minimumAgeCheck"
-                                                name="minimumAgeCheck" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">onlyToRecipient</label>
-                                        <div class="col-md-6">
-                                                <select  class="select" formControlName="onlyToRecipient">
-                                                    <option *ngFor="let veri of verificationBool" [ngValue]="veri.id">{{veri.id}}</option>
-                                                  </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">requireSignature</label>
-                                        <div class="col-md-6">
-                                            <select class="select"  formControlName="requireSignature">
-                                                <option *ngFor="let veri of verificationBool" [ngValue]="veri.id">{{veri.id}}</option>
-                                              </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">idCheck</label>
-                                        <div class="col-md-6">
-                                                <select class="select"  formControlName="idCheck">
-                                                    <option *ngFor="let veri of verificationBool" [ngValue]="veri.id">{{veri.id}}</option>
-                                                  </select>
-                                        </div>
-                                    </div>
-
-                                 
-
-                                         
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="idCred">leaveAtDoorstep</label>
-                                        <div class="col-md-6">
-                                            <select class="select" formControlName="leaveAtDoorstep">
-                                                <option *ngFor="let veri of verificationBool" [ngValue]="veri.id">{{veri.id}}</option>
-                                              </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Form Name -->
-                                </fieldset>
-                            </form>
-
-                        </div>
+                    <!-- Form Name -->
+                  </fieldset>
+                </form>
+                <form [formGroup]="originInfoForm" class="form-horizontal">
+                  <fieldset>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">name</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="name" formControlName="name" name="name" type="text" placeholder="" />
+                      </div>
                     </div>
-                </div>
-
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">
-                            Parcels
-                            <span class="icon">
-                                <i class="icon-shopping-cart"></i>
-                            </span>
-                        </p>
-
-                        <button class="button is-outlined" (click)="parcelDataShow ($event)"
-                            aria-label="more options">
-                            <span class="icon">
-                                <i class="fas fa-archive"></i>
-                            </span>
-                        </button>
-
-
-                    </header>
-                    <div class="card-content" [hidden]="!parcelDataBool">
-                        <div class="content">
-                            <button (click)="addParcel()" type="button" class="button is-success button is-small"><span
-                                    class="icon-plus"></span> Add Parcel</button>
-                                    <hr class="solid">
-
-                            <form [formGroup]="parcelForm" class="form-horizontal">
-                                <fieldset>
-                                    <div formArrayName="products"
-                                        *ngFor="let time of parcelForm.controls.products?.value; let i = index; trackBy:trackByFn">
-                                        <div [formGroupName]="i">
-
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="heightCm">description</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="description" 
-                                                        (ngModelChange)="changedExtraHandler($event)" type="text"
-                                                        formControlName="description" class="input is-small" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="heightCm">heightCm</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="heightCm" (keypress)="numberOnly($event)"
-                                                        (ngModelChange)="changedExtraHandler($event)" type="text"
-                                                        formControlName="heightCm" class="input is-small" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="widthCm">widthCm</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="widthCm" (keypress)="numberOnly($event)"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="widthCm" type="text" class="input is-small" />
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="weightGrams">weightGrams</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="weightGrams" (keypress)="numberOnly($event)"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="weightGrams" type="text"
-                                                        class="input is-small" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" type="text" for="depthCm">depthCm</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="depthCm" (keypress)="numberOnly($event)"
-                                                        (ngModelChange)="changedExtraHandler($event)" type="text"
-                                                        formControlName="depthCm" class="input is-small" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" type="text" for="depthCm">parcelShipmentIdentifier</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="parcelShipmentIdentifier" 
-                                                        (ngModelChange)="changedExtraHandler($event)" type="text"
-                                                        formControlName="parcelShipmentIdentifier" class="input is-small" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <hr class="solid">
-
-                                   
-                                    </div>
-
-                                    <div  [hidden]="!removeParcelBool">
-                                        <button (click)="removeParcel(0)" type="button" id="removeParcelBtn"
-                                        class="button is-danger  button is-small"><span
-                                            class="icon-close"></span>Remove Parcel</button>     
-                                    </div>
-                                    
-                                  
-                                    <br />
-                                </fieldset>
-                            </form>
-                        </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="email">email</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="email" formControlName="email" name="email" type="text" placeholder="" />
+                      </div>
                     </div>
-                </div>
-
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">
-                            Items
-                            <span class="icon">
-                                <i class="icon-shopping-cart"></i>
-                            </span>
-                        </p>
-
-                        <button class="button is-outlined" (click)="itemsDataShow ($event)" aria-label="more options">
-                            <span class="icon">
-                                <i class="fas fa-shopping-basket"></i>
-                            </span>
-                        </button>
-
-
-                    </header>
-                    <div class="card-content" [hidden]="!itemsDataBool">
-                        <div class="content">
-                            <button (click)="addItems()" type="button"
-                                class="button is-success button is-small"><span class="icon-plus"></span> Add Item</button>
-                                <hr class="solid">
-
-                            <form [formGroup]="itemsForm" class="form-horizontal">
-                                <fieldset>
-                                    <div formArrayName="products"
-                                        *ngFor="let time of itemsForm.controls.products?.value; let i = index; trackBy:trackByFn">
-                                        <div [formGroupName]="i">
-
-
-
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="heightCm">name</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="name"
-                                                        (ngModelChange)="changedExtraHandler($event)" type="text"
-                                                        formControlName="name" class="input is-small" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="sku">sku</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="name"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="sku" type="text" class="input is-small" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="weightGrams">weightGrams</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="weightGrams" (keypress)="numberOnly($event)"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="weightGrams" type="text"
-                                                        class="input is-small" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="sku">sku</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="sku" (keypress)="numberOnly($event)"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="widthCm" type="text" class="input is-small" />
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="heightCm">heightCm</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="heightCm" (keypress)="numberOnly($event)"
-                                                        (ngModelChange)="changedExtraHandler($event)" type="text"
-                                                        formControlName="heightCm" class="input is-small" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="widthCm">widthCm</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="widthCm" (keypress)="numberOnly($event)"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="widthCm" type="text" class="input is-small" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="depthCm">depthCm</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="depthCm" (keypress)="numberOnly($event)"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="depthCm" type="text" class="input is-small" />
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="description">description</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="description"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="description" type="text"
-                                                        class="input is-small" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="category">category</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="category"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="category" type="text" class="input is-small" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="brand">brand</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="brand" (keypress)="numberOnly($event)"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="imageUrl" type="text" class="input is-small" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="price">price</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="price" (keypress)="numberOnly($event)"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="price" type="text" class="input is-small" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="imageUrl">imageUrl</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="imageUrl"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="imageUrl" type="text" class="input is-small" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="currency">currency</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="name"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="currency" type="text" class="input is-small" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="barCodevalue">barCodevalue</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="barCodevalue"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="barCodevalue" type="text"
-                                                        class="input is-small" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="labelMedium" for="barCodetype">barCodetype</label>
-                                                <div class="col-md-6">
-                                                    <input placeholder="barCodetype"
-                                                        (ngModelChange)="changedExtraHandler($event)"
-                                                        formControlName="barCodetype" type="text"
-                                                        class="input is-small" />
-                                                </div>
-                                            </div>
-
-                                            <hr class="solid">
-
-
-                                        </div>
-                                    
-                                    </div>
-
-                                    <br />
-                                </fieldset>
-                            </form>
-                            
-                            <div  [hidden]="!removeItemBool">
-                                <button (click)="removeItems(0)" type="button" id="removeItemBtn"
-                                class="button is-danger  button is-small"><span
-                                    class="icon-close"></span>Remove Item</button>
-
-                            </div>
-
-                        </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="phoneCountryCode">phoneCountryCode</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="phoneCountryCode" formControlName="phoneCountryCode" name="phoneCountryCode" type="text" placeholder="" />
+                      </div>
                     </div>
-                </div>
-
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">
-                            Others
-                            <span class="icon">
-                                <i class="icofont icofont-credit-card"></i>
-                            </span>
-                        </p>
-
-                        <button class="button is-outlined" (click)="othernDataShow ($event)" aria-label="more options">
-                            <span class="icon">
-                                <i class="fas fa-tools"></i>
-                            </span>
-                        </button>
-
-                    </header>
-
-
-                    <div class="card-content" [hidden]="!otherDataBool">
-                        <div class="content">
-                            <form [formGroup]="otherDataForm" class="form-horizontal">
-                                <fieldset>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="product">product</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="product" formControlName="product"
-                                                name="product" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="courierInstructions">courierInstructions</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="publicToken" formControlName="courierInstructions"
-                                                name="courierInstructions" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="orderReference">orderReference</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="publicToken" formControlName="orderReference"
-                                                name="orderReference" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="statusWebhookUrl">statusWebhookUrl</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="publicToken" formControlName="statusWebhookUrl"
-                                                name="statusWebhookUrl" type="text" placeholder="" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Form Name -->
-                                </fieldset>
-                            </form>
-                        </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="phoneNumber">phoneNumber</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" (keypress)="numberOnly($event)" id="phoneNumber" formControlName="phoneNumber" name="phoneNumber" type="text" placeholder="" />
+                      </div>
                     </div>
-                </div>
-
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">
-                            Test API Keys
-                            <span class="icon">
-                                <i class="icofont icofont-credit-card"></i>
-                            </span>
-                        </p>
-
-                        <button class="button is-outlined" (click)="apiDataShow ($event)" aria-label="more options">
-                            <span class="icon">
-                                <i class="fas fa-key"></i>
-                            </span>
-                        </button>
-
-                    </header>
-
-
-                    <div class="card-content" [hidden]="!apiDataBool">
-                        <div class="content">
-                            <form [formGroup]="apiKeyForm" class="form-horizontal">
-                                <fieldset>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="apiKey">API Key</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="apiKey" formControlName="apiKey"
-                                                name="apiKey" type="password" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="labelMedium" for="apiKey">Public Token</label>
-                                        <div class="col-md-6">
-                                            <input class="input is-small" id="publicToken" formControlName="publicToken"
-                                                name="publicToken" type="password" placeholder="" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Form Name -->
-                                </fieldset>
-                            </form>
-                        </div>
-                        <div class="notification is-info is-light">
-                            <button class="delete"></button>
-                            To find your test api keys log in at <a href ="https://retailers.porterbuddy-test.com" target="_blank">https://retailers.porterbuddy-test.com</a> and navigate to Profile > API
-                        </div>
-                    </div>
-                </div>
-
-
-               
-
-                
+                    <!-- Form Name -->
+                  </fieldset>
+                </form>
+              </div>
             </div>
-        </div>
-
-        <div class="column is-7">
-            <div class="card">
-                <div class="column is-3">
-                    <button (click)="avabilityReqest()" style="background:#661aff" class="button is-info"> {{titlePB}}
-                        <span style="margin-right: 2%;" style="color: white !important;margin-left: 2%;" class="icon"><i
-                                style="color: white !important;margin-left: 2%;" class="far fa-clock   "></i></span>
-                    </button>
-
-                </div>
-                <div class="loader-box" [hidden]="!showSpinner" style="display: center;">
-                </div>
-
-                <div class="column is-12">
-                    <div class="column"></div>
-                    <h1>Checkout Widget</h1>
-                    <div [hidden]="!httpErrorBool"  id="porterbuddy-widget"></div>
-                    <div [hidden]="!httpErrorBool">
-                        <button [hidden]="!httpErrorBool" (click)="createOrder()" style="background:#661aff"
-                            class="button is-info">Create Order
-                            <span style="margin-right: 2%;" style="color: white !important;margin-left: 2%;"
-                                class="icon"><i style="color: white !important;margin-left: 2%;"
-                                    class="fas fa-dolly"></i></span>
-                        </button>
+          </div>
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title"> Destination <span class="icon">
+                  <i class="icofont icofont-credit-card"></i>
+                </span>
+              </p>
+              <button class="button is-outlined" (click)="destinationDataShow ($event)" aria-label="more options">
+                <span class="icon">
+                  <i class="fas fa-dolly"></i>
+                </span>
+              </button>
+            </header>
+            <div class="card-content" [hidden]="!destinationDataBool">
+              <div class="content">
+                <form [formGroup]="destinationAddress" class="form-horizontal">
+                  <fieldset>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">streetName</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="streetNa3me" formControlName="streetName" name="streetName" type="text" placeholder="" />
+                      </div>
                     </div>
-                    <pre [hidden]="!showErrorDataBool">{{errorData | json:4}}</pre>
-                </div>
-
-                <div class="column is-3">
-                    <button (click)="showDebug()" class="button is-light">
-                        <span style="margin-right:4%" class="icon"><i style="margin-left:2%"
-                                class="fas fa-search"></i></span> {{debugTitle}}
-                    </button>
-                </div>
-
-                <div class="column is-12">
-                    <h1 [hidden]="!showTrackingLink">Created Porterbuddy Order {{orderID}}  <svg xmlns="http://www.w3.org/2000/svg" width="68.285" height="61.062" viewBox="0 0 68.285 61.062" class="pb-confetti-icon"><g id="Group_450" data-name="Group 450" transform="translate(-286.052 -302.86)"><path id="Path_2479" data-name="Path 2479" d="M405.871,329.145a1.714,1.714,0,0,0,2.273-.845c6.428-14.042.159-24.218-.111-24.644a1.715,1.715,0,0,0-2.9,1.829c.228.366,5.517,9.1-.107,21.387A1.715,1.715,0,0,0,405.871,329.145Z" transform="translate(-84.861)" fill="#f50"></path><path id="Path_2480" data-name="Path 2480" d="M355.09,349.06a1.715,1.715,0,0,0,3.429,0,9.933,9.933,0,0,0-3.16-6.923,1.715,1.715,0,0,0-2.266,2.574A6.514,6.514,0,0,1,355.09,349.06Z" transform="translate(-47.474 -27.75)" fill="#661aff"></path><path id="Path_2481" data-name="Path 2481" d="M433.689,439.693a1.715,1.715,0,0,0-.141,3.427c.84.037,3.442.41,4.346,1.585a1.715,1.715,0,1,0,2.718-2.091C438.572,439.963,434.183,439.713,433.689,439.693Z" transform="translate(-104.172 -97.727)" fill="#8446ff"></path><circle id="Ellipse_222" data-name="Ellipse 222" cx="1.448" cy="1.448" r="1.448" transform="translate(299.639 312.861) rotate(-45)" fill="#ffca33"></circle><circle id="Ellipse_223" data-name="Ellipse 223" cx="1.448" cy="1.448" r="1.448" transform="translate(314.429 314.318) rotate(-9.217)" fill="#661aff"></circle><circle id="Ellipse_224" data-name="Ellipse 224" cx="1.448" cy="1.448" r="1.448" transform="translate(330.196 309.423) rotate(-13.283)" fill="#108000"></circle><circle id="Ellipse_225" data-name="Ellipse 225" cx="1.448" cy="1.448" r="1.448" transform="translate(338.661 324.098) rotate(-45)" fill="#f50"></circle><circle id="Ellipse_226" data-name="Ellipse 226" cx="1.448" cy="1.448" r="1.448" transform="translate(328.829 325.878) rotate(-9.217)" fill="#661aff"></circle><circle id="Ellipse_227" data-name="Ellipse 227" cx="1.448" cy="1.448" r="1.448" transform="translate(337.169 352.744)" fill="#ffca33"></circle><circle id="Ellipse_228" data-name="Ellipse 228" cx="1.448" cy="1.448" r="1.448" transform="translate(349.33 342.336) rotate(-13.283)" fill="#7e73ff"></circle><path id="Path_2482" data-name="Path 2482" d="M353.573,382.907a23.084,23.084,0,0,0-9.917-3.1c-5.124-.5-13,.221-22.249,6.1a54.743,54.743,0,0,0-4.239-4.752c-7.256-7.256-15.11-11.292-18.1-9.428a1.711,1.711,0,0,0-.923,1.037l-.043.135a3.067,3.067,0,0,0-.129.406L286.133,410.55a1.715,1.715,0,0,0,2.179,2.146L324.9,400.443a1.715,1.715,0,0,0,.351-.166,2.514,2.514,0,0,0,1.022-.6c1.744-1.744.483-6.05-2.836-11,6.67-4.207,13.282-6.049,19.693-5.472a20.246,20.246,0,0,1,8.55,2.559,1.715,1.715,0,0,0,1.9-2.857Zm-54.047-3.159a50.116,50.116,0,0,0,19.223,19.138l-28.326,9.486Z" transform="translate(0 -48.862)" fill="#661aff"></path></g></svg></h1>
-                    <h2 [hidden]="!showTrackingLink">Fetched information Order {{orderID}} </h2>
-                    <pre [hidden]="!showTrackingLink">{{statusData | json:2}}</pre>
-                    <h2 [hidden]="!showTrackingLink">Tracking link OrderID {{orderID}} </h2>
-                    <iframe [hidden]="!showTrackingLink" [src]="urlSafe "
-                        style="display: center; width:100%; height: 1200px;" frameborder="0" allowfullscreen></iframe>
-                </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">streetNumber</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" (keypress)="numberOnly($event)" id="streetNumber" formControlName="streetNumber" name="streetNumber" type="text" placeholder="" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">postalCode</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" (keypress)="numberOnly($event)" id="postalCoded" formControlName="postalCode" name="postalCode" type="text" placeholder="" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">city</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="city" formControlName="city" name="city" type="text" placeholder="" />
+                      </div>
+                    </div>
+                    <!-- Form Name -->
+                  </fieldset>
+                </form>
+                <form [formGroup]="recipient" class="form-horizontal">
+                  <fieldset>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">name</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="recipientname" formControlName="name" name="name" type="text" placeholder="" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">email</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="recipientemail" formControlName="email" name="email" type="email" placeholder="" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">phoneCountryCode</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="recipientphoneCountryCode" formControlName="phoneCountryCode" name="phoneCountryCode" type="text" placeholder="" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">phoneNumber</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" (keypress)="numberOnly($event)" id="recipientphoneNumber" formControlName="phoneNumber" name="phoneNumber" type="text" placeholder="" />
+                      </div>
+                    </div>
+                    <!-- Form Name -->
+                  </fieldset>
+                </form>
+              </div>
             </div>
+          </div>
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title"> Verification <span class="icon">
+                  <i class="icofont icofont-credit-card"></i>
+                </span>
+              </p>
+              <button class="button is-outlined" (click)="verificationDataShow ($event)" aria-label="more options">
+                <span class="icon">
+                  <i class="fas fa-address-card"></i>
+                </span>
+              </button>
+            </header>
+            <div class="card-content" [hidden]="!verDataBool">
+              <div class="content">
+                <form [formGroup]="verificationsForm" class="form-horizontal">
+                  <fieldset>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">minimumAgeCheck</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" (keypress)="numberOnly($event)" id="minimumAgeCheck" formControlName="minimumAgeCheck" name="minimumAgeCheck" type="text" placeholder="" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">onlyToRecipient</label>
+                      <div class="col-md-6">
+                        <select class="select" formControlName="onlyToRecipient">
+                          <option *ngFor="let veri of verificationBool" [ngValue]="veri.id">{{veri.id}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">requireSignature</label>
+                      <div class="col-md-6">
+                        <select class="select" formControlName="requireSignature">
+                          <option *ngFor="let veri of verificationBool" [ngValue]="veri.id">{{veri.id}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">idCheck</label>
+                      <div class="col-md-6">
+                        <select class="select" formControlName="idCheck">
+                          <option *ngFor="let veri of verificationBool" [ngValue]="veri.id">{{veri.id}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="idCred">leaveAtDoorstep</label>
+                      <div class="col-md-6">
+                        <select class="select" formControlName="leaveAtDoorstep">
+                          <option *ngFor="let veri of verificationBool" [ngValue]="veri.id">{{veri.id}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- Form Name -->
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title"> Parcels <span class="icon">
+                  <i class="icon-shopping-cart"></i>
+                </span>
+              </p>
+              <button class="button is-outlined" (click)="parcelDataShow ($event)" aria-label="more options">
+                <span class="icon">
+                  <i class="fas fa-archive"></i>
+                </span>
+              </button>
+            </header>
+            <div class="card-content" [hidden]="!parcelDataBool">
+              <div class="content">
+                <button (click)="addParcel()" type="button" class="button is-success button is-small">
+                  <span class="icon-plus"></span> Add Parcel </button>
+                <hr class="solid">
+                <form [formGroup]="parcelForm" class="form-horizontal">
+                  <fieldset>
+                    <div formArrayName="products" *ngFor="let time of parcelForm.controls.products?.value; let i = index; trackBy:trackByFn">
+                      <div [formGroupName]="i">
+                        <div class="form-group row">
+                          <label class="labelMedium" for="heightCm">description</label>
+                          <div class="col-md-6">
+                            <input placeholder="description" (ngModelChange)="changedExtraHandler($event)" type="text" formControlName="description" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="heightCm">heightCm</label>
+                          <div class="col-md-6">
+                            <input placeholder="heightCm" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" type="text" formControlName="heightCm" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="widthCm">widthCm</label>
+                          <div class="col-md-6">
+                            <input placeholder="widthCm" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" formControlName="widthCm" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="weightGrams">weightGrams</label>
+                          <div class="col-md-6">
+                            <input placeholder="weightGrams" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" formControlName="weightGrams" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" type="text" for="depthCm">depthCm</label>
+                          <div class="col-md-6">
+                            <input placeholder="depthCm" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" type="text" formControlName="depthCm" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" type="text" for="depthCm">parcelShipmentIdentifier</label>
+                          <div class="col-md-6">
+                            <input placeholder="parcelShipmentIdentifier" (ngModelChange)="changedExtraHandler($event)" type="text" formControlName="parcelShipmentIdentifier" class="input is-small" />
+                          </div>
+                        </div>
+                      </div>
+                      <hr class="solid">
+                    </div>
+                    <div [hidden]="!removeParcelBool">
+                      <button (click)="removeParcel(0)" type="button" id="removeParcelBtn" class="button is-danger  button is-small">
+                        <span class="icon-close"></span>Remove Parcel </button>
+                    </div>
+                    <br />
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title"> Items <span class="icon">
+                  <i class="icon-shopping-cart"></i>
+                </span>
+              </p>
+              <button class="button is-outlined" (click)="itemsDataShow ($event)" aria-label="more options">
+                <span class="icon">
+                  <i class="fas fa-shopping-basket"></i>
+                </span>
+              </button>
+            </header>
+            <div class="card-content" [hidden]="!itemsDataBool">
+              <div class="content">
+                <button (click)="addItems()" type="button" class="button is-success button is-small">
+                  <span class="icon-plus"></span> Add Item </button>
+                <hr class="solid">
+                <form [formGroup]="itemsForm" class="form-horizontal">
+                  <fieldset>
+                    <div formArrayName="products" *ngFor="let time of itemsForm.controls.products?.value; let i = index; trackBy:trackByFn">
+                      <div [formGroupName]="i">
+                        <div class="form-group row">
+                          <label class="labelMedium" for="heightCm">name</label>
+                          <div class="col-md-6">
+                            <input placeholder="name" (ngModelChange)="changedExtraHandler($event)" type="text" formControlName="name" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="sku">sku</label>
+                          <div class="col-md-6">
+                            <input placeholder="name" (ngModelChange)="changedExtraHandler($event)" formControlName="sku" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="weightGrams">weightGrams</label>
+                          <div class="col-md-6">
+                            <input placeholder="weightGrams" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" formControlName="weightGrams" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="sku">sku</label>
+                          <div class="col-md-6">
+                            <input placeholder="sku" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" formControlName="widthCm" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="heightCm">heightCm</label>
+                          <div class="col-md-6">
+                            <input placeholder="heightCm" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" type="text" formControlName="heightCm" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="widthCm">widthCm</label>
+                          <div class="col-md-6">
+                            <input placeholder="widthCm" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" formControlName="widthCm" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="depthCm">depthCm</label>
+                          <div class="col-md-6">
+                            <input placeholder="depthCm" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" formControlName="depthCm" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="description">description</label>
+                          <div class="col-md-6">
+                            <input placeholder="description" (ngModelChange)="changedExtraHandler($event)" formControlName="description" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="category">category</label>
+                          <div class="col-md-6">
+                            <input placeholder="category" (ngModelChange)="changedExtraHandler($event)" formControlName="category" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="brand">brand</label>
+                          <div class="col-md-6">
+                            <input placeholder="brand" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" formControlName="imageUrl" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="price">price</label>
+                          <div class="col-md-6">
+                            <input placeholder="price" (keypress)="numberOnly($event)" (ngModelChange)="changedExtraHandler($event)" formControlName="price" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="imageUrl">imageUrl</label>
+                          <div class="col-md-6">
+                            <input placeholder="imageUrl" (ngModelChange)="changedExtraHandler($event)" formControlName="imageUrl" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="currency">currency</label>
+                          <div class="col-md-6">
+                            <input placeholder="name" (ngModelChange)="changedExtraHandler($event)" formControlName="currency" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="barCodevalue">barCodevalue</label>
+                          <div class="col-md-6">
+                            <input placeholder="barCodevalue" (ngModelChange)="changedExtraHandler($event)" formControlName="barCodevalue" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="labelMedium" for="barCodetype">barCodetype</label>
+                          <div class="col-md-6">
+                            <input placeholder="barCodetype" (ngModelChange)="changedExtraHandler($event)" formControlName="barCodetype" type="text" class="input is-small" />
+                          </div>
+                        </div>
+                        <hr class="solid">
+                      </div>
+                    </div>
+                    <br />
+                  </fieldset>
+                </form>
+                <div [hidden]="!removeItemBool">
+                  <button (click)="removeItems(0)" type="button" id="removeItemBtn" class="button is-danger  button is-small">
+                    <span class="icon-close"></span>Remove Item </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title"> Others <span class="icon">
+                  <i class="icofont icofont-credit-card"></i>
+                </span>
+              </p>
+              <button class="button is-outlined" (click)="othernDataShow ($event)" aria-label="more options">
+                <span class="icon">
+                  <i class="fas fa-tools"></i>
+                </span>
+              </button>
+            </header>
+            <div class="card-content" [hidden]="!otherDataBool">
+              <div class="content">
+                <form [formGroup]="otherDataForm" class="form-horizontal">
+                  <fieldset>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="product">product</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="product" formControlName="product" name="product" type="text" placeholder="" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="courierInstructions">courierInstructions</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="courierInstructions" formControlName="courierInstructions" name="courierInstructions" type="text" placeholder="" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="orderReference">orderReference</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="orderReference" formControlName="orderReference" name="orderReference" type="text" placeholder="" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="statusWebhookUrl">statusWebhookUrl</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="statusWebhookUrl" formControlName="statusWebhookUrl" name="statusWebhookUrl" type="text" placeholder="" />
+                      </div>
+                    </div>
+                    <!-- Form Name -->
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title"> Test API Keys <span class="icon">
+                  <i class="icofont icofont-credit-card"></i>
+                </span>
+              </p>
+              <button class="button is-outlined" (click)="apiDataShow ($event)" aria-label="more options">
+                <span class="icon">
+                  <i class="fas fa-key"></i>
+                </span>
+              </button>
+            </header>
+            <div class="card-content" [hidden]="!apiDataBool">
+              <div class="content">
+                <form [formGroup]="apiKeyForm" class="form-horizontal">
+                  <fieldset>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="apiKey">API Key</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="apiKey" formControlName="apiKey" name="apiKey" type="password" placeholder="" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="labelMedium" for="apiKey">Public Token</label>
+                      <div class="col-md-6">
+                        <input class="input is-small" id="publicToken" formControlName="publicToken" name="publicToken" type="password" placeholder="" />
+                      </div>
+                    </div>
+                    <!-- Form Name -->
+                  </fieldset>
+                </form>
+              </div>
+              <div class="notification is-info is-light">
+                <button class="delete"></button> To find your test api keys login at <a href="https://retailers.porterbuddy-test.com" target="_blank">https://retailers.porterbuddy-test.com</a> and navigate to Profile > API
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <div  class="column is-12" >
-            <h3 [hidden]="!debugBool">Avability Request</h3>
-            <pre [hidden]="!debugBool">{{checkoutObj | json:4}}</pre>
-            <h3 [hidden]="!debugBool">Avability Response</h3>
-            <pre [hidden]="!debugBool">{{saveData | json:4}}</pre>
-            <h3 [hidden]="!debugBool">Order Request</h3>
-            <pre [hidden]="!debugBool">{{orderDataRequest | json:4}}</pre>
-            <h3 [hidden]="!debugBool">Order Response</h3>
-            <pre [hidden]="!debugBool">{{orderData | json:4}}</pre>
-        
+      </div>
+      <div class="column is-7">
+        <div class="card">
+          <div class="column is-3">
+            <button (click)="avabilityReqest()" style="background:#661aff" class="button is-info"> {{titlePB}}
+              <span style="margin-right: 2%;" style="color: white !important;margin-left: 2%;" class="icon">
+                <i style="color: white !important;margin-left: 2%;" class="far fa-clock   "></i>
+              </span>
+            </button>
+          </div>
+          <div class="loader-box" [hidden]="!showSpinner" style="display: center;"></div>
+          <div class="column is-12">
+            <div class="column"></div>
+            <h1>Checkout Widget</h1>
+            <div [hidden]="!httpErrorBool" id="porterbuddy-widget"></div>
+            <div [hidden]="!httpErrorBool">
+              <button [hidden]="!httpErrorBool" (click)="createOrder()" style="background:#661aff" class="button is-info">Create Order <span style="margin-right: 2%;" style="color: white !important;margin-left: 2%;" class="icon">
+                  <i style="color: white !important;margin-left: 2%;" class="fas fa-dolly"></i>
+                </span>
+              </button>
+            </div>
+            <pre [hidden]="!showErrorDataBool">{{errorData | json:4}}</pre>
+          </div>
+          <div class="column is-3">
+            <button (click)="showDebug()" class="button is-light">
+              <span style="margin-right:4%" class="icon">
+                <i style="margin-left:2%" class="fas fa-search"></i>
+              </span> {{debugTitle}}
+            </button>
+          </div>
+          <div class="column is-12">
+            <h1 [hidden]="!showTrackingLink">Created Porterbuddy Order {{orderID}}
+              <svg xmlns="http://www.w3.org/2000/svg" width="68.285" height="61.062" viewBox="0 0 68.285 61.062" class="pb-confetti-icon">
+                <g id="Group_450" data-name="Group 450" transform="translate(-286.052 -302.86)">
+                  <path id="Path_2479" data-name="Path 2479" d="M405.871,329.145a1.714,1.714,0,0,0,2.273-.845c6.428-14.042.159-24.218-.111-24.644a1.715,1.715,0,0,0-2.9,1.829c.228.366,5.517,9.1-.107,21.387A1.715,1.715,0,0,0,405.871,329.145Z" transform="translate(-84.861)" fill="#f50"></path>
+                  <path id="Path_2480" data-name="Path 2480" d="M355.09,349.06a1.715,1.715,0,0,0,3.429,0,9.933,9.933,0,0,0-3.16-6.923,1.715,1.715,0,0,0-2.266,2.574A6.514,6.514,0,0,1,355.09,349.06Z" transform="translate(-47.474 -27.75)" fill="#661aff"></path>
+                  <path id="Path_2481" data-name="Path 2481" d="M433.689,439.693a1.715,1.715,0,0,0-.141,3.427c.84.037,3.442.41,4.346,1.585a1.715,1.715,0,1,0,2.718-2.091C438.572,439.963,434.183,439.713,433.689,439.693Z" transform="translate(-104.172 -97.727)" fill="#8446ff"></path>
+                  <circle id="Ellipse_222" data-name="Ellipse 222" cx="1.448" cy="1.448" r="1.448" transform="translate(299.639 312.861) rotate(-45)" fill="#ffca33"></circle>
+                  <circle id="Ellipse_223" data-name="Ellipse 223" cx="1.448" cy="1.448" r="1.448" transform="translate(314.429 314.318) rotate(-9.217)" fill="#661aff"></circle>
+                  <circle id="Ellipse_224" data-name="Ellipse 224" cx="1.448" cy="1.448" r="1.448" transform="translate(330.196 309.423) rotate(-13.283)" fill="#108000"></circle>
+                  <circle id="Ellipse_225" data-name="Ellipse 225" cx="1.448" cy="1.448" r="1.448" transform="translate(338.661 324.098) rotate(-45)" fill="#f50"></circle>
+                  <circle id="Ellipse_226" data-name="Ellipse 226" cx="1.448" cy="1.448" r="1.448" transform="translate(328.829 325.878) rotate(-9.217)" fill="#661aff"></circle>
+                  <circle id="Ellipse_227" data-name="Ellipse 227" cx="1.448" cy="1.448" r="1.448" transform="translate(337.169 352.744)" fill="#ffca33"></circle>
+                  <circle id="Ellipse_228" data-name="Ellipse 228" cx="1.448" cy="1.448" r="1.448" transform="translate(349.33 342.336) rotate(-13.283)" fill="#7e73ff"></circle>
+                  <path id="Path_2482" data-name="Path 2482" d="M353.573,382.907a23.084,23.084,0,0,0-9.917-3.1c-5.124-.5-13,.221-22.249,6.1a54.743,54.743,0,0,0-4.239-4.752c-7.256-7.256-15.11-11.292-18.1-9.428a1.711,1.711,0,0,0-.923,1.037l-.043.135a3.067,3.067,0,0,0-.129.406L286.133,410.55a1.715,1.715,0,0,0,2.179,2.146L324.9,400.443a1.715,1.715,0,0,0,.351-.166,2.514,2.514,0,0,0,1.022-.6c1.744-1.744.483-6.05-2.836-11,6.67-4.207,13.282-6.049,19.693-5.472a20.246,20.246,0,0,1,8.55,2.559,1.715,1.715,0,0,0,1.9-2.857Zm-54.047-3.159a50.116,50.116,0,0,0,19.223,19.138l-28.326,9.486Z" transform="translate(0 -48.862)" fill="#661aff"></path>
+                </g>
+              </svg>
+            </h1>
+            <h2 [hidden]="!showTrackingLink">Fetched information Order {{orderID}} </h2>
+            <pre [hidden]="!showTrackingLink">{{statusData | json:2}}</pre>
+            <h2 [hidden]="!showTrackingLink">Tracking link OrderID {{orderID}} </h2>
+            <iframe [hidden]="!showTrackingLink" [src]="urlSafe " style="display: center; width:100%; height: 1200px;" frameborder="0" allowfullscreen></iframe>
+          </div>
         </div>
-        
+      </div>
+      <div class="column is-12">
+        <h3 [hidden]="!debugBool">Avability Request</h3>
+        <pre [hidden]="!debugBool">{{checkoutObj | json:4}}</pre>
+        <h3 [hidden]="!debugBool">Avability Response</h3>
+        <pre [hidden]="!debugBool">{{saveData | json:4}}</pre>
+        <h3 [hidden]="!debugBool">Order Request</h3>
+        <pre [hidden]="!debugBool">{{orderDataRequest | json:4}}</pre>
+        <h3 [hidden]="!debugBool">Order Response</h3>
+        <pre [hidden]="!debugBool">{{orderData | json:4}}</pre>
+      </div>
     </div>
-</div>
-
-
-
+  </div>
